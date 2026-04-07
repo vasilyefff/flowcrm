@@ -2,7 +2,9 @@ import { configureStore } from '@reduxjs/toolkit'
 import clientsReducer from '@/entities/client/model/clientSlice'
 
 export const store = configureStore({
-	reducer: {
-		clients: clientsReducer
-	}
+  reducer: {
+    clients: clientsReducer,
+  },
 })
+
+export type RootState = ReturnType<typeof store.getState>

@@ -1,21 +1,33 @@
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addClient } from '@/entities/client/model/clientSlice'
-import { deleteClient } from '@/entities/client/model/clientSlice'
+import { addClient, deleteClient } from '@/entities/client/model/clientSlice'
+import type { RootState } from '@/app/store'
 
 export const ClientsPage = () => {
-  const clients = useSelector((state) => state.clients.clients)
+  const clients = useSelector((state: RootState) => state.clients.clients)
   const dispatch = useDispatch()
-
-  console.log(clients)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [company, setCompany] = useState('')
 
   const handleAdd = () => {
+    if (!name || !email) {
+      alert('Поля Name и Email обязательны')
+      return
+    }
     dispatch(
       addClient({
-        id: Date.now().toString(),
-        name: 'Test',
-        email: 'test@mail.com',
+        name,
+        email,
+        phone,
+        company,
       }),
     )
+    setName('')
+    setEmail('')
+    setPhone('')
+    setCompany('')
   }
 
   const handleDelete = (id: string) => {
@@ -25,6 +37,34 @@ export const ClientsPage = () => {
   return (
     <>
       <div>Clients Page</div>
+      <div>
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+        />
+      </div>
+      <div>
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+      </div>
+      <div>
+        <input
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Phone"
+        />
+      </div>
+      <div>
+        <input
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          placeholder="Company"
+        />
+      </div>
       <button onClick={handleAdd}>Add client</button>
 
       {clients.length === 0 ? (
@@ -32,7 +72,8 @@ export const ClientsPage = () => {
       ) : (
         clients.map((client) => (
           <div key={client.id}>
-            {client.name} — {client.email}
+            {client.name} - {client.email} - {client.phone} - {client.company} -
+            {client.status}
             <button onClick={() => handleDelete(client.id)}>Delete</button>
           </div>
         ))
