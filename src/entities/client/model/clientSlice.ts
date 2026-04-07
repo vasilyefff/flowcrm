@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { Client } from './types'
+import type { CreateClientDto } from './types'
 
 type ClientsState = {
   clients: Client[]
@@ -14,8 +15,14 @@ const clientsSlice = createSlice({
   name: 'clients',
   initialState,
   reducers: {
-    addClient: (state, action: PayloadAction<Client>) => {
-      state.clients.push(action.payload)
+    addClient: (state, action: PayloadAction<CreateClientDto>) => {
+      const newClient: Client = {
+        ...action.payload,
+        id: Date.now().toString(),
+        status: 'lead',
+        createdAt: new Date().toISOString(),
+      }
+      state.clients.push(newClient)
     },
     deleteClient: (state, action: PayloadAction<string>) => {
       state.clients = state.clients.filter(
