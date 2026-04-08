@@ -10,6 +10,7 @@ export const ClientsPage = () => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [company, setCompany] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
 
   const handleAdd = () => {
     if (!name || !email) {
@@ -33,6 +34,14 @@ export const ClientsPage = () => {
   const handleDelete = (id: string) => {
     dispatch(deleteClient(id))
   }
+
+  const filteredClients = clients.filter((client) => {
+    const term = searchTerm.toLowerCase()
+    return (
+      client.name.toLowerCase().includes(term) ||
+      client.email.toLowerCase().includes(term)
+    )
+  })
 
   return (
     <>
@@ -67,10 +76,18 @@ export const ClientsPage = () => {
       </div>
       <button onClick={handleAdd}>Add client</button>
 
-      {clients.length === 0 ? (
-        <div>No clients yet</div>
+      <div>
+        <input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search clients..."
+        />
+      </div>
+
+      {filteredClients.length === 0 ? (
+        <div>No clients found</div>
       ) : (
-        clients.map((client) => (
+        filteredClients.map((client) => (
           <div key={client.id}>
             {client.name} - {client.email} - {client.phone} - {client.company} -
             {client.status}
