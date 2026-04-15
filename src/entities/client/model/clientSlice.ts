@@ -4,11 +4,11 @@ import type { Client } from './types'
 import type { CreateClientDto } from './types'
 
 type ClientsState = {
-  clients: Client[]
+  items: Client[]
 }
 
 const initialState: ClientsState = {
-  clients: [],
+  items: [],
 }
 
 const clientsSlice = createSlice({
@@ -22,15 +22,13 @@ const clientsSlice = createSlice({
         status: 'lead',
         createdAt: new Date().toISOString(),
       }
-      state.clients.push(newClient)
+      state.items.push(newClient)
     },
     deleteClient: (state, action: PayloadAction<string>) => {
-      state.clients = state.clients.filter(
-        (client) => client.id !== action.payload,
-      )
+      state.items = state.items.filter((client) => client.id !== action.payload)
     },
     updateClient: (state, action: PayloadAction<Client>) => {
-      state.clients = state.clients.map((client) =>
+      state.items = state.items.map((client) =>
         client.id === action.payload.id ? action.payload : client,
       )
     },
