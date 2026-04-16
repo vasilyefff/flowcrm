@@ -1,4 +1,5 @@
 import type { Client } from '../model/types'
+import { ClientCard } from './ClientCard'
 
 type ClientListProps = {
   clients: Client[]
@@ -13,11 +14,7 @@ export const ClientList = ({ clients, onDelete }: ClientListProps) => {
   return (
     <div>
       {clients.map((client) => (
-        <div key={client.id}>
-          {client.name} - {client.email} - {client.phone} - {client.company} -{' '}
-          {client.status}
-          <button onClick={() => onDelete(client.id)}>Delete</button>
-        </div>
+        <ClientCard key={client.id} client={client} onDelete={onDelete} />
       ))}
     </div>
   )
