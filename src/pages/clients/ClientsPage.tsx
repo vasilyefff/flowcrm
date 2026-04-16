@@ -8,6 +8,7 @@ import {
 import type { RootState, AppDispatch } from '@/app/store'
 import type { Client } from '@/entities/client/model/types'
 import { ClientForm } from '@/features/client/create/ClientForm'
+import { ClientList } from '@/entities/client/ui/ClientList'
 
 export const ClientsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
@@ -22,14 +23,6 @@ export const ClientsPage = () => {
 
   const handleDelete = (id: string) => {
     dispatch(deleteClient(id))
-  }
-
-  const handleEditStart = (client: Client) => {
-    setEditClient(client)
-    setEditName(client.name)
-    setEditEmail(client.email)
-    setEditPhone(client.phone)
-    setEditCompany(client.company)
   }
 
   const handleUpdate = () => {
@@ -51,10 +44,14 @@ export const ClientsPage = () => {
   const term = searchTerm.toLowerCase()
 
   const filteredClients = clients.filter((client) => {
-    return (
-      client.name.toLowerCase().includes(term) ||
-      client.email.toLowerCase().includes(term)
-    )
+    const values = [
+      client.name,
+      client.email,
+      client.company,
+      String(client.phone),
+    ]
+
+    return values.some((value) => value.toLowerCase().includes(term))
   })
 
   return (
@@ -112,18 +109,7 @@ export const ClientsPage = () => {
         </div>
       )}
 
-      {filteredClients.length === 0 ? (
-        <div>No clients found</div>
-      ) : (
-        filteredClients.map((client) => (
-          <div key={client.id}>
-            {client.name} - {client.email} - {client.phone} - {client.company} -{' '}
-            {client.status}
-            <button onClick={() => handleDelete(client.id)}>Delete</button>
-            <button onClick={() => handleEditStart(client)}>Edit</button>
-          </div>
-        ))
-      )}
+      <ClientList clients={filteredClients} onDelete={handleDelete} />
 
       <ClientForm onSubmit={(data) => dispatch(addClient(data))} />
     </>
