@@ -1,18 +1,39 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
 import type { CreateClientDto } from '@/entities/client/model/types'
 
 type Props = {
   onSubmit: (data: CreateClientDto) => void
+  onCancel?: () => void
+  initialData?: CreateClientDto
+  isEdit?: boolean
 }
 
-export const ClientForm = ({ onSubmit }: Props) => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [company, setCompany] = useState('')
+export const ClientForm = ({
+  onSubmit,
+  initialData,
+  isEdit,
+  onCancel,
+}: Props) => {
+  const [name, setName] = useState(initialData?.name || '')
+  const [email, setEmail] = useState(initialData?.email || '')
+  const [phone, setPhone] = useState(initialData?.phone || '')
+  const [company, setCompany] = useState(initialData?.company || '')
+
+  useEffect(() => {
+    if (!initialData) return
+
+    setName(initialData.name)
+    setEmail(initialData.email)
+    setPhone(initialData.phone)
+    setCompany(initialData.company)
+  }, [initialData])
 
   const handleAdd = () => {
-    if (!name.trim() || !email.trim()) return
+    if (!name.trim() || !email.includes('@')) {
+      alert('Enter valid name and email')
+      return
+    }
 
     onSubmit({
       name,
@@ -29,7 +50,9 @@ export const ClientForm = ({ onSubmit }: Props) => {
 
   return (
     <div style={{ marginTop: 20 }}>
-      <h3 style={{ marginBottom: 10 }}>Add Client</h3>
+      <h3 style={{ marginBottom: 10 }}>
+        {isEdit ? 'Edit Client' : 'Add Client'}
+      </h3>
 
       <div style={{ marginBottom: 8 }}>
         <input
@@ -63,7 +86,12 @@ export const ClientForm = ({ onSubmit }: Props) => {
         />
       </div>
 
-      <button onClick={handleAdd}>Add client</button>
+      <button onClick={handleAdd}>{isEdit ? 'Save' : 'Add client'}</button>
+      {isEdit && (
+        <button onClick={onCancel} style={{ marginLeft: 8 }}>
+          Cancel
+        </button>
+      )}
     </div>
   )
 }

@@ -7,6 +7,7 @@ import {
 } from '@/entities/client/model/clientSlice'
 import type { RootState, AppDispatch } from '@/app/store'
 import type { Client } from '@/entities/client/model/types'
+import type { CreateClientDto } from '@/entities/client/model/types'
 import { ClientForm } from '@/features/client/create/ClientForm'
 import { ClientList } from '@/entities/client/ui/ClientList'
 
@@ -16,28 +17,33 @@ export const ClientsPage = () => {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [editClient, setEditClient] = useState<Client | null>(null)
-  const [editName, setEditName] = useState('')
-  const [editEmail, setEditEmail] = useState('')
-  const [editPhone, setEditPhone] = useState('')
-  const [editCompany, setEditCompany] = useState('')
 
   const handleDelete = (id: string) => {
     dispatch(deleteClient(id))
+
+    if (editClient?.id === id) {
+      setEditClient(null)
+    }
   }
 
-  const handleUpdate = () => {
+  const handleUpdate = (data: CreateClientDto) => {
     if (!editClient) return
 
     dispatch(
       updateClient({
         ...editClient,
-        name: editName,
-        email: editEmail,
-        phone: editPhone,
-        company: editCompany,
+        ...data,
       }),
     )
 
+    setEditClient(null)
+  }
+
+  const handleEdit = (client: Client) => {
+    setEditClient(client)
+  }
+
+  const handleCancel = () => {
     setEditClient(null)
   }
 
@@ -54,6 +60,25 @@ export const ClientsPage = () => {
     return values.some((value) => value.toLowerCase().includes(term))
   })
 
+  const overlayStyle = {
+    position: 'fixed' as const,
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'rgba(0,0,0,0.5)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+
+  const modalStyle = {
+    background: 'white',
+    padding: 20,
+    borderRadius: 8,
+    minWidth: 300,
+  }
+
   return (
     <>
       <div>Clients Page</div>
@@ -67,49 +92,23 @@ export const ClientsPage = () => {
       </div>
 
       {editClient && (
-        <div style={{ marginTop: 20 }}>
-          <h3 style={{ marginBottom: 10 }}>Edit Client</h3>
-
-          <div style={{ marginBottom: 8 }}>
-            <input
-              value={editName}
-              onChange={(e) => setEditName(e.target.value)}
-              placeholder="Name"
+        <div style={overlayStyle}>
+          <div style={modalStyle}>
+            <ClientForm
+              onSubmit={handleUpdate}
+              initialData={editClient}
+              isEdit
+              onCancel={handleCancel}
             />
-          </div>
-
-          <div style={{ marginBottom: 8 }}>
-            <input
-              value={editEmail}
-              onChange={(e) => setEditEmail(e.target.value)}
-              placeholder="Email"
-            />
-          </div>
-
-          <div style={{ marginBottom: 8 }}>
-            <input
-              value={editPhone}
-              onChange={(e) => setEditPhone(e.target.value)}
-              placeholder="Phone"
-            />
-          </div>
-
-          <div style={{ marginBottom: 8 }}>
-            <input
-              value={editCompany}
-              onChange={(e) => setEditCompany(e.target.value)}
-              placeholder="Company"
-            />
-          </div>
-
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button onClick={handleUpdate}>Save</button>
-            <button onClick={() => setEditClient(null)}>Cancel</button>
           </div>
         </div>
       )}
 
-      <ClientList clients={filteredClients} onDelete={handleDelete} />
+      <ClientList
+        clients={filteredClients}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+      />
 
       <ClientForm onSubmit={(data) => dispatch(addClient(data))} />
     </>
