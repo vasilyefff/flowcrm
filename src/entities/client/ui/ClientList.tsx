@@ -1,4 +1,4 @@
-import type { Client } from '@/model/types'
+import type { Client } from '@/entities/client/model/types'
 import { ClientCard } from './ClientCard'
 
 type ClientListProps = {
