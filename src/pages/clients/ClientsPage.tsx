@@ -10,6 +10,7 @@ import type { Client } from '@/entities/client/model/types'
 import type { CreateClientDto } from '@/entities/client/model/types'
 import { ClientForm } from '@/features/client/create/ClientForm'
 import { ClientList } from '@/entities/client/ui/ClientList'
+import { DeleteClientModal } from '@/features/client/delete/DeleteClientModal'
 
 export const ClientsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
@@ -17,13 +18,29 @@ export const ClientsPage = () => {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [editClient, setEditClient] = useState<Client | null>(null)
+  const [clientToDelete, setClientToDelete] = useState<Client | null>(null)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-  const handleDelete = (id: string) => {
-    dispatch(deleteClient(id))
+  const handleDelete = (client: Client) => {
+    setClientToDelete(client)
+    setIsDeleteModalOpen(true)
+  }
 
-    if (editClient?.id === id) {
+  const handleConfirmDelete = () => {
+    if (!clientToDelete) return
+
+    dispatch(deleteClient(clientToDelete.id))
+
+    if (editClient?.id === clientToDelete.id) {
       setEditClient(null)
     }
+    setClientToDelete(null)
+    setIsDeleteModalOpen(false)
+  }
+
+  const handleCancelDelete = () => {
+    setClientToDelete(null)
+    setIsDeleteModalOpen(false)
   }
 
   const handleUpdate = (data: CreateClientDto) => {
@@ -103,6 +120,13 @@ export const ClientsPage = () => {
           </div>
         </div>
       )}
+
+      <DeleteClientModal
+        isOpen={isDeleteModalOpen}
+        client={clientToDelete}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
 
       <ClientList
         clients={filteredClients}

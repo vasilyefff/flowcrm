@@ -11,7 +11,7 @@ export const ClientCard = ({ client, onDelete, onEdit }: ClientCardProps) => {
     <div>
       {client.name} - {client.email} - {client.phone} - {client.company} -{' '}
       {client.status}
-      <button onClick={() => onDelete(client.id)}>Delete</button>
+      <button onClick={() => onDelete(client)}>Delete</button>
       <button onClick={() => onEdit(client)}>Edit</button>
     </div>
   )
