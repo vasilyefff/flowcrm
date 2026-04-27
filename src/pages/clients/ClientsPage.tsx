@@ -10,6 +10,7 @@ import type { Client } from '@/entities/client/model/types'
 import type { CreateClientDto } from '@/entities/client/model/types'
 import { ClientForm } from '@/features/client/create/ClientForm'
 import { ClientList } from '@/entities/client/ui/ClientList'
+import { DeleteClientDialog } from '@/features/client/delete/DeleteClientDialog'
 import { Modal } from '@/shared/ui/Modal'
 
 export const ClientsPage = () => {
@@ -98,21 +99,12 @@ export const ClientsPage = () => {
         />
       </Modal>
 
-      <Modal isOpen={isDeleteModalOpen} onClose={handleCancelDelete}>
-        <div>
-          <h3>Delete client?</h3>
-          <p>
-            {clientToDelete?.name
-              ? `Are you sure you want to delete ${clientToDelete.name}?`
-              : 'Are you sure?'}
-          </p>
-
-          <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
-            <button onClick={handleConfirmDelete}>Delete</button>
-            <button onClick={handleCancelDelete}>Cancel</button>
-          </div>
-        </div>
-      </Modal>
+      <DeleteClientDialog
+        isOpen={isDeleteModalOpen}
+        client={clientToDelete}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
 
       <ClientList
         clients={filteredClients}
