@@ -10,7 +10,7 @@ import type { Client } from '@/entities/client/model/types'
 import type { CreateClientDto } from '@/entities/client/model/types'
 import { ClientForm } from '@/features/client/create/ClientForm'
 import { ClientList } from '@/entities/client/ui/ClientList'
-import { DeleteClientModal } from '@/features/client/delete/DeleteClientModal'
+import { Modal } from '@/shared/ui/Modal'
 
 export const ClientsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
@@ -77,25 +77,6 @@ export const ClientsPage = () => {
     return values.some((value) => value.toLowerCase().includes(term))
   })
 
-  const overlayStyle = {
-    position: 'fixed' as const,
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    background: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-
-  const modalStyle = {
-    background: 'white',
-    padding: 20,
-    borderRadius: 8,
-    minWidth: 300,
-  }
-
   return (
     <>
       <div>Clients Page</div>
@@ -108,25 +89,30 @@ export const ClientsPage = () => {
         />
       </div>
 
-      {editClient && (
-        <div style={overlayStyle}>
-          <div style={modalStyle}>
-            <ClientForm
-              onSubmit={handleUpdate}
-              initialData={editClient}
-              isEdit
-              onCancel={handleCancel}
-            />
+      <Modal isOpen={!!editClient} onClose={handleCancel}>
+        <ClientForm
+          onSubmit={handleUpdate}
+          initialData={editClient ?? undefined}
+          isEdit
+          onCancel={handleCancel}
+        />
+      </Modal>
+
+      <Modal isOpen={isDeleteModalOpen} onClose={handleCancelDelete}>
+        <div>
+          <h3>Delete client?</h3>
+          <p>
+            {clientToDelete?.name
+              ? `Are you sure you want to delete ${clientToDelete.name}?`
+              : 'Are you sure?'}
+          </p>
+
+          <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
+            <button onClick={handleConfirmDelete}>Delete</button>
+            <button onClick={handleCancelDelete}>Cancel</button>
           </div>
         </div>
-      )}
-
-      <DeleteClientModal
-        isOpen={isDeleteModalOpen}
-        client={clientToDelete}
-        onConfirm={handleConfirmDelete}
-        onCancel={handleCancelDelete}
-      />
+      </Modal>
 
       <ClientList
         clients={filteredClients}
