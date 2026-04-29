@@ -11,7 +11,7 @@ import type { CreateClientDto } from '@/entities/client/model/types'
 import { ClientForm } from '@/features/client/create/ClientForm'
 import { ClientList } from '@/entities/client/ui/ClientList'
 import { DeleteClientDialog } from '@/features/client/delete/DeleteClientDialog'
-import { Modal } from '@/shared/ui/Modal'
+import { EditClientDialog } from '@/features/client/edit/EditClientDialog'
 
 export const ClientsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
@@ -90,14 +90,12 @@ export const ClientsPage = () => {
         />
       </div>
 
-      <Modal isOpen={!!editClient} onClose={handleCancel}>
-        <ClientForm
-          onSubmit={handleUpdate}
-          initialData={editClient ?? undefined}
-          isEdit
-          onCancel={handleCancel}
-        />
-      </Modal>
+      <EditClientDialog
+        isOpen={!!editClient}
+        client={editClient}
+        onSubmit={handleUpdate}
+        onCancel={handleCancel}
+      />
 
       <DeleteClientDialog
         isOpen={isDeleteModalOpen}
