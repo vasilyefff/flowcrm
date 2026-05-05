@@ -5,11 +5,17 @@ type ClientListProps = {
   clients: Client[]
   onDelete: (id: string) => void
   onEdit: (client: Client) => void
+  hasClients: boolean
 }
 
-export const ClientList = ({ clients, onDelete, onEdit }: ClientListProps) => {
+export const ClientList = ({
+  clients,
+  onDelete,
+  onEdit,
+  hasClients,
+}: ClientListProps) => {
   if (clients.length === 0) {
-    return <div>No clients found</div>
+    return <div>{hasClients ? 'No results found' : 'No clients yet'}</div>
   }
 
   return (

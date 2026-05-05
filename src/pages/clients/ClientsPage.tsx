@@ -120,17 +120,12 @@ export const ClientsPage = () => {
         onCancel={handleCancelDelete}
       />
 
-      {clients.length === 0 ? (
-        <div>No clients yet</div>
-      ) : filteredClients.length === 0 ? (
-        <div>No results found</div>
-      ) : (
-        <ClientList
-          clients={filteredClients}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-        />
-      )}
+      <ClientList
+        clients={filteredClients}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+        hasClients={clients.length > 0}
+      />
 
       <ClientForm onSubmit={(data) => dispatch(addClient(data))} />
     </>
