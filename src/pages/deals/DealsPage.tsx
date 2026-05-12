@@ -1,3 +1,31 @@
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '@/app/store'
+import { addDeal } from '@/entities/deal/model/dealSlice'
+
 export const DealsPage = () => {
-  return <div>Deals Page</div>
+  const deals = useSelector((state: RootState) => state.deals.items)
+
+  const dispatch = useDispatch()
+
+  return (
+    <div>
+      <h1>{deals.length}</h1>
+
+      <button
+        onClick={() =>
+          dispatch(
+            addDeal({
+              title: 'Test deal',
+              clientId: '1',
+              value: 5000,
+              stage: 'lead',
+              comment: 'Test comment',
+            }),
+          )
+        }
+      >
+        Add test deal
+      </button>
+    </div>
+  )
 }

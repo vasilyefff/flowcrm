@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { PayloadAction } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 import type { Deal } from './types'
 import type { CreateDealDto } from './types'
 
