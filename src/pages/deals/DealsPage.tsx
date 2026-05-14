@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '@/app/store'
 import { addDeal } from '@/entities/deal/model/dealSlice'
-import { DealCard } from './DealCard'
+import { DealList } from './DealList'
 
 export const DealsPage = () => {
   const deals = useSelector((state: RootState) => state.deals.items)
@@ -12,9 +12,7 @@ export const DealsPage = () => {
     <div>
       <h1>{deals.length}</h1>
 
-      {deals.map((item) => (
-        <DealCard key={item.id} deal={item} />
-      ))}
+      <DealList deals={deals} />
 
       <button
         onClick={() =>
