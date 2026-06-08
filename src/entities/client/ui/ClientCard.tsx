@@ -2,7 +2,7 @@ import type { Client } from '@/entities/client/model/types'
 
 type ClientCardProps = {
   client: Client
-  onDelete: (id: string) => void
+  onDelete: (client: Client) => void
   onEdit: (client: Client) => void
 }
 

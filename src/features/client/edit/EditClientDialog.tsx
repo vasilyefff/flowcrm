@@ -19,6 +19,7 @@ export const EditClientDialog = ({
   return (
     <Modal isOpen={isOpen} onClose={onCancel}>
       <ClientForm
+        key={client?.id}
         onSubmit={onSubmit}
         initialData={client ?? undefined}
         isEdit

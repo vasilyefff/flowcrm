@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 
 import type { CreateClientDto } from '@/entities/client/model/types'
 
@@ -20,14 +20,7 @@ export const ClientForm = ({
   const [phone, setPhone] = useState(initialData?.phone || '')
   const [company, setCompany] = useState(initialData?.company || '')
 
-  useEffect(() => {
-    if (!initialData) return
 
-    setName(initialData.name)
-    setEmail(initialData.email)
-    setPhone(initialData.phone)
-    setCompany(initialData.company)
-  }, [initialData])
 
   const handleAdd = () => {
     if (!name.trim() || !email.includes('@')) {

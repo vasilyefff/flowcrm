@@ -1,4 +1,5 @@
 import { DealCard } from './DealCard'
+import type { Deal } from '@/entities/deal/model/types'
 
 type DealListProps = {
   deals: Deal[]

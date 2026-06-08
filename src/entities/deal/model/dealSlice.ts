@@ -23,9 +23,10 @@ const dealsSlice = createSlice({
       }
       state.items.push(newDeal)
     },
-  },
-  deleteDeal: (state, action: PayloadAction<string>) => {
-    state.items = state.items.filter((deal) => deal.id !== action.payload)
+
+    deleteDeal: (state, action: PayloadAction<string>) => {
+      state.items = state.items.filter((deal) => deal.id !== action.payload)
+    },
   },
 })
 

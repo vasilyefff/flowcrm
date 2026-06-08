@@ -3,7 +3,7 @@ import { ClientCard } from './ClientCard'
 
 type ClientListProps = {
   clients: Client[]
-  onDelete: (id: string) => void
+  onDelete: (client: Client) => void
   onEdit: (client: Client) => void
   hasClients: boolean
 }
