@@ -1,7 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import type { Client } from './types'
-import type { CreateClientDto } from './types'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import type { Client, CreateClientDto } from './types'
 
 type ClientsState = {
   items: Client[]

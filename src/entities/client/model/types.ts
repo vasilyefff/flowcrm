@@ -16,3 +16,11 @@ export type CreateClientDto = {
   phone: string
   company: string
 }
+
+export type UpdateClientDto = {
+  name?: string
+  email?: string
+  phone?: string
+  company?: string
+  status?: ClientStatus
+}
