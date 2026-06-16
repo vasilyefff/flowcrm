@@ -1,6 +1,9 @@
-import { useState} from 'react'
+import { useState } from 'react'
 
-import type { CreateClientDto } from '@/entities/client/model/types'
+import type {
+  ClientStatus,
+  CreateClientDto,
+} from '@/entities/client/model/types'
 
 type Props = {
   onSubmit: (data: CreateClientDto) => void
@@ -19,8 +22,9 @@ export const ClientForm = ({
   const [email, setEmail] = useState(initialData?.email || '')
   const [phone, setPhone] = useState(initialData?.phone || '')
   const [company, setCompany] = useState(initialData?.company || '')
-
-
+  const [status, setStatus] = useState<ClientStatus>(
+    initialData?.status || 'lead',
+  )
 
   const handleAdd = () => {
     if (!name.trim() || !email.includes('@')) {
@@ -33,12 +37,14 @@ export const ClientForm = ({
       email,
       phone,
       company,
+      status,
     })
 
     setName('')
     setEmail('')
     setPhone('')
     setCompany('')
+    setStatus('lead')
   }
 
   return (
@@ -77,6 +83,17 @@ export const ClientForm = ({
           onChange={(e) => setCompany(e.target.value)}
           placeholder="Company"
         />
+      </div>
+
+      <div style={{ marginBottom: 8 }}>
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value as ClientStatus)}
+        >
+          <option value="lead">Lead</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
       </div>
 
       <button onClick={handleAdd}>{isEdit ? 'Save' : 'Add client'}</button>

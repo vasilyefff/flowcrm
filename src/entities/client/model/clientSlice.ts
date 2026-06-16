@@ -17,7 +17,6 @@ const clientsSlice = createSlice({
       const newClient: Client = {
         ...action.payload,
         id: Date.now().toString(),
-        status: 'lead',
         createdAt: new Date().toISOString(),
       }
       state.items.push(newClient)
