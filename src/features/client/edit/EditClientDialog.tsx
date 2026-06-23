@@ -1,12 +1,12 @@
 import type { Client } from '@/entities/client/model/types'
-import type { CreateClientDto } from '@/entities/client/model/types'
+import type { UpdateClientDto } from '@/entities/client/model/types'
 import { Modal } from '@/shared/ui/Modal'
 import { ClientForm } from '../create/ClientForm'
 
 type Props = {
   isOpen: boolean
   client: Client | null
-  onSubmit: (data: CreateClientDto) => void
+  onSubmit: (data: UpdateClientDto) => void
   onCancel: () => void
 }
 

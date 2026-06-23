@@ -1,23 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import type {
   ClientStatus,
   CreateClientDto,
+  UpdateClientDto,
 } from '@/entities/client/model/types'
 
-type Props = {
+type CreateClientFormProps = {
   onSubmit: (data: CreateClientDto) => void
   onCancel?: () => void
   initialData?: CreateClientDto
-  isEdit?: boolean
+  isEdit?: false
 }
 
-export const ClientForm = ({
-  onSubmit,
-  initialData,
-  isEdit,
-  onCancel,
-}: Props) => {
+type EditClientFormProps = {
+  onSubmit: (data: UpdateClientDto) => void
+  onCancel?: () => void
+  initialData?: UpdateClientDto
+  isEdit: true
+}
+
+type Props = CreateClientFormProps | EditClientFormProps
+
+export const ClientForm = (props: Props) => {
+  const { onSubmit, initialData, isEdit, onCancel } = props
   const [name, setName] = useState(initialData?.name || '')
   const [email, setEmail] = useState(initialData?.email || '')
   const [phone, setPhone] = useState(initialData?.phone || '')
@@ -25,26 +31,43 @@ export const ClientForm = ({
   const [status, setStatus] = useState<ClientStatus>(
     initialData?.status || 'lead',
   )
+  const [error, setError] = useState('')
 
-  const handleAdd = () => {
+  useEffect(() => {
+    setName(initialData?.name || '')
+    setEmail(initialData?.email || '')
+    setPhone(initialData?.phone || '')
+    setCompany(initialData?.company || '')
+    setStatus(initialData?.status || 'lead')
+    setError('')
+  }, [initialData])
+
+  const handleSubmit = () => {
     if (!name.trim() || !email.includes('@')) {
-      alert('Enter valid name and email')
+      setError('Enter valid name and email')
       return
     }
-
-    onSubmit({
+    const formData: CreateClientDto = {
       name,
       email,
       phone,
       company,
       status,
-    })
+    }
 
-    setName('')
-    setEmail('')
-    setPhone('')
-    setCompany('')
-    setStatus('lead')
+    if (isEdit) {
+      onSubmit(formData)
+    } else {
+      onSubmit(formData)
+    }
+
+    if (!isEdit) {
+      setName('')
+      setEmail('')
+      setPhone('')
+      setCompany('')
+      setStatus('lead')
+    }
   }
 
   return (
@@ -96,7 +119,9 @@ export const ClientForm = ({
         </select>
       </div>
 
-      <button onClick={handleAdd}>{isEdit ? 'Save' : 'Add client'}</button>
+      {error && <p style={{ color: 'red', marginBottom: 8 }}>{error}</p>}
+
+      <button onClick={handleSubmit}>{isEdit ? 'Save' : 'Add client'}</button>
       {isEdit && (
         <button onClick={onCancel} style={{ marginLeft: 8 }}>
           Cancel

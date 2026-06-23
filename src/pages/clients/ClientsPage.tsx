@@ -6,8 +6,11 @@ import {
   updateClient,
 } from '@/entities/client/model/clientSlice'
 import type { RootState, AppDispatch } from '@/app/store'
-import type { Client } from '@/entities/client/model/types'
-import type { CreateClientDto } from '@/entities/client/model/types'
+import type {
+  Client,
+  CreateClientDto,
+  UpdateClientDto,
+} from '@/entities/client/model/types'
 import type { ClientStatus } from '@/entities/client/model/types'
 import { ClientForm } from '@/features/client/create/ClientForm'
 import { ClientList } from '@/entities/client/ui/ClientList'
@@ -23,6 +26,10 @@ export const ClientsPage = () => {
   const [editClient, setEditClient] = useState<Client | null>(null)
   const [clientToDelete, setClientToDelete] = useState<Client | null>(null)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+
+  const handleCreate = (data: CreateClientDto) => {
+    dispatch(addClient(data))
+  }
 
   const handleDelete = (client: Client) => {
     setClientToDelete(client)
@@ -46,7 +53,7 @@ export const ClientsPage = () => {
     setIsDeleteModalOpen(false)
   }
 
-  const handleUpdate = (data: CreateClientDto) => {
+  const handleUpdate = (data: UpdateClientDto) => {
     if (!editClient) return
 
     dispatch(
@@ -97,7 +104,9 @@ export const ClientsPage = () => {
         />
         <select
           value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value as any)}
+          onChange={(e) =>
+            setStatusFilter(e.target.value as 'all' | ClientStatus)
+          }
         >
           <option value="all">All</option>
           <option value="lead">Lead</option>
@@ -127,7 +136,7 @@ export const ClientsPage = () => {
         hasClients={clients.length > 0}
       />
 
-      <ClientForm onSubmit={(data) => dispatch(addClient(data))} />
+      <ClientForm onSubmit={handleCreate} />
     </>
   )
 }
