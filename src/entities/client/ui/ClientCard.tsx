@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type { Client } from '@/entities/client/model/types'
 
 type ClientCardProps = {
@@ -13,6 +14,7 @@ export const ClientCard = ({ client, onDelete, onEdit }: ClientCardProps) => {
       {client.status}
       <button onClick={() => onDelete(client)}>Delete</button>
       <button onClick={() => onEdit(client)}>Edit</button>
+      <Link to={`/clients/${client.id}`}>Details</Link>
     </div>
   )
 }
