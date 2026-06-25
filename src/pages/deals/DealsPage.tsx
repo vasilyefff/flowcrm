@@ -1,6 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux'
+
 import type { RootState } from '@/app/store'
 import { addDeal } from '@/entities/deal/model/dealSlice'
+import type { CreateDealDto } from '@/entities/deal/model/types'
+import { DealForm } from '@/features/deal/create/DealForm'
+
 import { DealList } from './DealList'
 
 export const DealsPage = () => {
@@ -8,27 +12,17 @@ export const DealsPage = () => {
 
   const dispatch = useDispatch()
 
+  const handleCreateDeal = (data: CreateDealDto) => {
+    dispatch(addDeal(data))
+  }
+
   return (
     <div>
       <h1>{deals.length}</h1>
 
-      <DealList deals={deals} />
+      <DealForm onSubmit={handleCreateDeal} />
 
-      <button
-        onClick={() =>
-          dispatch(
-            addDeal({
-              title: 'Test deal',
-              clientId: '1',
-              value: 5000,
-              stage: 'lead',
-              comment: 'Test comment',
-            }),
-          )
-        }
-      >
-        Add test deal
-      </button>
+      <DealList deals={deals} />
     </div>
   )
 }

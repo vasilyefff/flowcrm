@@ -24,12 +24,18 @@ const dealsSlice = createSlice({
       state.items.push(newDeal)
     },
 
+    updateDeal: (state, action: PayloadAction<Deal>) => {
+      state.items = state.items.map((deal) =>
+        deal.id === action.payload.id ? action.payload : deal,
+      )
+    },
+
     deleteDeal: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((deal) => deal.id !== action.payload)
     },
   },
 })
 
-export const { addDeal, deleteDeal } = dealsSlice.actions
+export const { addDeal, updateDeal, deleteDeal } = dealsSlice.actions
 
 export default dealsSlice.reducer
