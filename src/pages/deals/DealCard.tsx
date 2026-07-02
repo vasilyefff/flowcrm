@@ -4,9 +4,10 @@ import type { Deal } from '@/entities/deal/model/types'
 
 type DealCardProps = {
   deal: Deal
+  onEdit: (deal: Deal) => void
 }
 
-export const DealCard = ({ deal }: DealCardProps) => {
+export const DealCard = ({ deal, onEdit }: DealCardProps) => {
   const clients = useSelector((state: RootState) => state.clients.items)
   const client = clients.find((client) => client.id === deal.clientId)
   return (
@@ -23,6 +24,9 @@ export const DealCard = ({ deal }: DealCardProps) => {
       <p>Stage: {deal.stage}</p>
       <p>Comment: {deal.comment || 'No comment'}</p>
       <p>Client: {client?.name || 'Client not found'}</p>
+      <button type="button" onClick={() => onEdit(deal)}>
+        Edit
+      </button>
     </div>
   )
 }

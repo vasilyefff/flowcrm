@@ -6,15 +6,17 @@ import type { CreateDealDto, DealStage } from '@/entities/deal/model/types'
 
 type Props = {
   onSubmit: (data: CreateDealDto) => void
+  initialData?: CreateDealDto
+  isEdit?: boolean
 }
 
-export const DealForm = ({ onSubmit }: Props) => {
+export const DealForm = ({ onSubmit, initialData, isEdit }: Props) => {
   const clients = useSelector((state: RootState) => state.clients.items)
-  const [clientId, setClientId] = useState('')
-  const [title, setTitle] = useState('')
-  const [value, setValue] = useState('')
-  const [stage, setStage] = useState<DealStage>('lead')
-  const [comment, setComment] = useState('')
+  const [clientId, setClientId] = useState(initialData?.clientId || '')
+  const [title, setTitle] = useState(initialData?.title || '')
+  const [value, setValue] = useState(initialData?.value?.toString() || '')
+  const [stage, setStage] = useState<DealStage>(initialData?.stage || 'lead')
+  const [comment, setComment] = useState(initialData?.comment || '')
   const [error, setError] = useState('')
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,7 +59,7 @@ export const DealForm = ({ onSubmit }: Props) => {
         borderRadius: '8px',
       }}
     >
-      <h2 style={{ margin: 0 }}>Create deal</h2>
+      <h2 style={{ margin: 0 }}>{isEdit ? 'Edit deal' : 'Create deal'}</h2>
 
       <div
         className="deal-form__field"
@@ -172,7 +174,7 @@ export const DealForm = ({ onSubmit }: Props) => {
           cursor: 'pointer',
         }}
       >
-        Create deal
+        {isEdit ? 'Save changes' : 'Create deal'}
       </button>
     </form>
   )
