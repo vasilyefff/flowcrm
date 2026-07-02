@@ -18,7 +18,8 @@ export const DealsPage = () => {
 
   return (
     <div>
-      <h1>{deals.length}</h1>
+      <h1>Deals</h1>
+      <p>Total deals: {deals.length}</p>
 
       <DealForm onSubmit={handleCreateDeal} />
 

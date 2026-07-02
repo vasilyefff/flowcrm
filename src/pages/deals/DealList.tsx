@@ -7,8 +7,8 @@ type DealListProps = {
 
 export const DealList = ({ deals }: DealListProps) => (
   <>
-    {deals.map((item) => (
-      <DealCard key={item.id} deal={item} />
+    {deals.map((deal) => (
+      <DealCard key={deal.id} deal={deal} />
     ))}
   </>
 )
