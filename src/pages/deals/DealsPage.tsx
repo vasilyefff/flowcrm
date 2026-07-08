@@ -5,6 +5,7 @@ import type { RootState } from '@/app/store'
 import { addDeal, updateDeal } from '@/entities/deal/model/dealSlice'
 import type { CreateDealDto, Deal } from '@/entities/deal/model/types'
 import { DealForm } from '@/features/deal/create/DealForm'
+import { EditDealDialog } from '@/features/deal/edit/EditDealDialog'
 
 import { DealList } from './DealList'
 
@@ -22,16 +23,22 @@ export const DealsPage = () => {
     setSelectedDeal(deal)
   }
 
-  const handleUpdateDeal = (data: CreateDealDto) => {
-    if (!selectedDeal) return
+  const handleUpdateDeal = (dealId: string, data: CreateDealDto) => {
+    const dealToUpdate = deals.find((deal) => deal.id === dealId)
+
+    if (!dealToUpdate) return
 
     dispatch(
       updateDeal({
-        ...selectedDeal,
+        ...dealToUpdate,
         ...data,
       }),
     )
 
+    setSelectedDeal(null)
+  }
+
+  const handleCancelEdit = () => {
     setSelectedDeal(null)
   }
 
@@ -42,13 +49,11 @@ export const DealsPage = () => {
 
       <DealForm onSubmit={handleCreateDeal} />
 
-      {selectedDeal && (
-        <DealForm
-          onSubmit={handleUpdateDeal}
-          initialData={selectedDeal}
-          isEdit
-        />
-      )}
+      <EditDealDialog
+        deal={selectedDeal}
+        onSubmit={handleUpdateDeal}
+        onCancel={handleCancelEdit}
+      />
 
       <DealList deals={deals} onEdit={handleEditDeal} />
     </div>

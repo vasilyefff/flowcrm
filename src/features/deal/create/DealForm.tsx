@@ -8,9 +8,15 @@ type Props = {
   onSubmit: (data: CreateDealDto) => void
   initialData?: CreateDealDto
   isEdit?: boolean
+  onCancel?: () => void
 }
 
-export const DealForm = ({ onSubmit, initialData, isEdit }: Props) => {
+export const DealForm = ({
+  onSubmit,
+  initialData,
+  isEdit,
+  onCancel,
+}: Props) => {
   const clients = useSelector((state: RootState) => state.clients.items)
   const [clientId, setClientId] = useState(initialData?.clientId || '')
   const [title, setTitle] = useState(initialData?.title || '')
@@ -176,6 +182,21 @@ export const DealForm = ({ onSubmit, initialData, isEdit }: Props) => {
       >
         {isEdit ? 'Save changes' : 'Create deal'}
       </button>
+
+      {onCancel && (
+        <button
+          type="button"
+          onClick={onCancel}
+          style={{
+            padding: '8px 12px',
+            border: '1px solid #222',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+        >
+          Cancel
+        </button>
+      )}
     </form>
   )
 }
