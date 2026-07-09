@@ -3,15 +3,22 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import type { RootState } from '@/app/store'
 import { addDeal, updateDeal } from '@/entities/deal/model/dealSlice'
-import type { CreateDealDto, Deal } from '@/entities/deal/model/types'
+import type {
+  CreateDealDto,
+  Deal,
+  DealStage,
+} from '@/entities/deal/model/types'
 import { DealForm } from '@/features/deal/create/DealForm'
 import { EditDealDialog } from '@/features/deal/edit/EditDealDialog'
 
 import { DealList } from './DealList'
 
+type DealStageFilter = DealStage | 'all'
+
 export const DealsPage = () => {
   const deals = useSelector((state: RootState) => state.deals.items)
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null)
+  const [stageFilter, setStageFilter] = useState<DealStageFilter>('all')
 
   const dispatch = useDispatch()
 
@@ -38,6 +45,11 @@ export const DealsPage = () => {
     setSelectedDeal(null)
   }
 
+  const filteredDeals =
+    stageFilter === 'all'
+      ? deals
+      : deals.filter((deal) => deal.stage === stageFilter)
+
   const handleCancelEdit = () => {
     setSelectedDeal(null)
   }
@@ -46,6 +58,22 @@ export const DealsPage = () => {
     <div>
       <h1>Deals</h1>
       <p>Total deals: {deals.length}</p>
+      <label>
+        Filter by stage:
+        <select
+          value={stageFilter}
+          onChange={(event) =>
+            setStageFilter(event.target.value as DealStageFilter)
+          }
+        >
+          <option value="all">All</option>
+          <option value="lead">Lead</option>
+          <option value="qualified">Qualified</option>
+          <option value="proposal">Proposal</option>
+          <option value="won">Won</option>
+          <option value="lost">Lost</option>
+        </select>
+      </label>
 
       <DealForm onSubmit={handleCreateDeal} />
 
@@ -55,7 +83,7 @@ export const DealsPage = () => {
         onCancel={handleCancelEdit}
       />
 
-      <DealList deals={deals} onEdit={handleEditDeal} />
+      <DealList deals={filteredDeals} onEdit={handleEditDeal} />
     </div>
   )
 }
