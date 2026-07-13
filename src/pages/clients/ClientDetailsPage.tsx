@@ -7,6 +7,9 @@ export const ClientDetailsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
   const client = clients.find((client) => client.id === clientId)
 
+  const deals = useSelector((state: RootState) => state.deals.items)
+  const clientDeals = deals.filter((deal) => deal.clientId === clientId)
+
   if (!client) {
     return <p>Client not found</p>
   }
@@ -20,6 +23,19 @@ export const ClientDetailsPage = () => {
       <p>Phone: {client.phone}</p>
       <p>Company: {client.company}</p>
       <p>Status: {client.status}</p>
+      <h3>Client deals</h3>
+      <p>Total deals: {clientDeals.length}</p>
+      {clientDeals.length === 0 ? (
+        <p>This client has no deals yet.</p>
+      ) : (
+        clientDeals.map((deal) => (
+          <div key={deal.id}>
+            <p>Title: {deal.title}</p>
+            <p>Value: {deal.value}</p>
+            <p>Stage: {deal.stage}</p>
+          </div>
+        ))
+      )}
     </div>
   )
 }
