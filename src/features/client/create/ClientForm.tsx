@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import type {
   ClientStatus,
@@ -32,15 +32,6 @@ export const ClientForm = (props: Props) => {
     initialData?.status || 'lead',
   )
   const [error, setError] = useState('')
-
-  useEffect(() => {
-    setName(initialData?.name || '')
-    setEmail(initialData?.email || '')
-    setPhone(initialData?.phone || '')
-    setCompany(initialData?.company || '')
-    setStatus(initialData?.status || 'lead')
-    setError('')
-  }, [initialData])
 
   const handleSubmit = () => {
     if (!name.trim() || !email.includes('@')) {
