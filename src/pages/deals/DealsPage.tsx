@@ -16,7 +16,7 @@ import { DealForm } from '@/features/deal/create/DealForm'
 import { EditDealDialog } from '@/features/deal/edit/EditDealDialog'
 import { DeleteDealDialog } from '@/features/deal/delete/DeleteDealDialog'
 
-import { DealList } from './DealList'
+import { DealList } from '@/entities/deal/ui/DealList'
 
 type DealStageFilter = DealStage | 'all'
 
