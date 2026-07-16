@@ -16,7 +16,17 @@ export const DashboardPage = () => {
     .filter((deal) => deal.stage === 'won')
     .reduce((total, deal) => total + deal.value, 0)
 
-  const newLeads = clients.filter((client) => client.status === 'lead').length
+  const leads = clients.filter((client) => client.status === 'lead').length
+
+  const leadClients = clients.filter((client) => client.status === 'lead')
+
+  const latestDeals = [...deals]
+    .sort(
+      (firstDeal, secondDeal) =>
+        new Date(secondDeal.createdAt).getTime() -
+        new Date(firstDeal.createdAt).getTime(),
+    )
+    .slice(0, 5)
 
   return (
     <div>
@@ -38,8 +48,38 @@ export const DashboardPage = () => {
       </div>
 
       <div>
-        <h2>New Leads</h2>
-        <p>{newLeads}</p>
+        <h2>Leads</h2>
+        <p>{leads}</p>
+      </div>
+
+      <div>
+        <h2>Latest Deals</h2>
+
+        {latestDeals.length === 0 ? (
+          <p>No deals yet</p>
+        ) : (
+          <ul>
+            {latestDeals.map((deal) => (
+              <li key={deal.id}>
+                {deal.title} — {deal.stage}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div>
+        <h2>Lead Clients</h2>
+
+        {leadClients.length === 0 ? (
+          <p>No lead clients yet</p>
+        ) : (
+          <ul>
+            {leadClients.map((client) => (
+              <li key={client.id}>{client.name}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )
