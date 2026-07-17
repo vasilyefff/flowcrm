@@ -28,6 +28,21 @@ export const DashboardPage = () => {
     )
     .slice(0, 5)
 
+  const dealsByStage = deals.reduce(
+    (stages, deal) => {
+      stages[deal.stage] += 1
+
+      return stages
+    },
+    {
+      lead: 0,
+      proposal: 0,
+      negotiation: 0,
+      won: 0,
+      lost: 0,
+    },
+  )
+
   return (
     <div>
       <h1>Dashboard</h1>
@@ -50,6 +65,18 @@ export const DashboardPage = () => {
       <div>
         <h2>Leads</h2>
         <p>{leads}</p>
+      </div>
+
+      <div>
+        <h2>Deals by Stage</h2>
+
+        <ul>
+          <li>Lead: {dealsByStage.lead}</li>
+          <li>Proposal: {dealsByStage.proposal}</li>
+          <li>Negotiation: {dealsByStage.negotiation}</li>
+          <li>Won: {dealsByStage.won}</li>
+          <li>Lost: {dealsByStage.lost}</li>
+        </ul>
       </div>
 
       <div>

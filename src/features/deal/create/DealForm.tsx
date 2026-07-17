@@ -144,7 +144,7 @@ export const DealForm = ({
           }}
         >
           <option value="lead">Lead</option>
-          <option value="qualified">Qualified</option>
+          <option value="negotiation">Negotiation</option>
           <option value="proposal">Proposal</option>
           <option value="won">Won</option>
           <option value="lost">Lost</option>

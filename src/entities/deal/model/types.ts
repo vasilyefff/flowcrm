@@ -1,4 +1,4 @@
-export type DealStage = 'lead' | 'qualified' | 'proposal' | 'won' | 'lost'
+export type DealStage = 'lead' | 'negotiation' | 'proposal' | 'won' | 'lost'
 
 export type Deal = {
   id: string
