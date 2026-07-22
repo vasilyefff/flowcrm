@@ -1,8 +1,8 @@
 import express from 'express'
 
 const app = express()
+app.use(express.json())
 const PORT = 3001
-
 const clients = [
   {
     id: '1',
@@ -36,6 +36,18 @@ app.get('/clients/:id', (request, response) => {
   }
 
   response.json(client)
+})
+
+app.post('/clients', (request, response) => {
+  const newClient = {
+    id: String(clients.length + 1),
+    ...request.body,
+    createdAt: new Date().toISOString(),
+  }
+
+  clients.push(newClient)
+
+  response.status(201).json(newClient)
 })
 
 app.listen(PORT, () => {
