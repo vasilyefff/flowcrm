@@ -11,6 +11,7 @@ const clients = [
     phone: '+1 555 123 4567',
     company: 'Nova Labs',
     status: 'active',
+    createdAt: '2026-07-20T10:00:00.000Z',
   },
   {
     id: '2',
@@ -19,6 +20,7 @@ const clients = [
     phone: '+1 555 987 6543',
     company: 'Bright Solutions',
     status: 'lead',
+    createdAt: '2026-07-20T10:00:00.000Z',
   },
 ]
 
@@ -40,8 +42,8 @@ app.get('/clients/:id', (request, response) => {
 
 app.post('/clients', (request, response) => {
   const newClient = {
-    id: String(clients.length + 1),
     ...request.body,
+    id: String(clients.length + 1),
     createdAt: new Date().toISOString(),
   }
 
