@@ -1,8 +1,12 @@
 import express from 'express'
+import cors from 'cors'
 
 const app = express()
+
+app.use(cors())
 app.use(express.json())
 const PORT = 3001
+
 const clients = [
   {
     id: '1',
@@ -50,6 +54,27 @@ app.post('/clients', (request, response) => {
   clients.push(newClient)
 
   response.status(201).json(newClient)
+})
+
+app.patch('/clients/:id', (request, response) => {
+  const clientIndex = clients.findIndex(
+    (client) => client.id === request.params.id,
+  )
+
+  if (clientIndex === -1) {
+    return response.status(404).json({
+      message: 'Client not found',
+    })
+  }
+
+  const updatedClient = {
+    ...clients[clientIndex],
+    ...request.body,
+  }
+
+  clients[clientIndex] = updatedClient
+
+  response.json(updatedClient)
 })
 
 app.listen(PORT, () => {
