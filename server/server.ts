@@ -77,6 +77,22 @@ app.patch('/clients/:id', (request, response) => {
   response.json(updatedClient)
 })
 
+app.delete('/clients/:id', (request, response) => {
+  const clientIndex = clients.findIndex(
+    (client) => client.id === request.params.id,
+  )
+
+  if (clientIndex === -1) {
+    return response.status(404).json({
+      message: 'Client not found',
+    })
+  }
+
+  clients.splice(clientIndex, 1)
+
+  response.status(204).send()
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
 })
