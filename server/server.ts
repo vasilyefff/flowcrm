@@ -28,6 +28,18 @@ const clients = [
   },
 ]
 
+const deals = [
+  {
+    id: '1',
+    title: 'Website redesign',
+    clientId: '1',
+    value: 12000,
+    stage: 'proposal',
+    comment: 'Waiting for approval',
+    createdAt: '2026-07-20T10:00:00.000Z',
+  },
+]
+
 app.get('/clients', (_request, response) => {
   response.json(clients)
 })
@@ -89,6 +101,67 @@ app.delete('/clients/:id', (request, response) => {
   }
 
   clients.splice(clientIndex, 1)
+
+  response.status(204).send()
+})
+
+app.get('/deals', (_request, response) => {
+  response.json(deals)
+})
+
+app.get('/deals/:id', (request, response) => {
+  const deal = deals.find((deal) => deal.id === request.params.id)
+
+  if (!deal) {
+    return response.status(404).json({
+      message: 'Deal not found',
+    })
+  }
+
+  response.json(deal)
+})
+
+app.post('/deals', (request, response) => {
+  const newDeal = {
+    ...request.body,
+    id: String(deals.length + 1),
+    createdAt: new Date().toISOString(),
+  }
+
+  deals.push(newDeal)
+
+  response.status(201).json(newDeal)
+})
+
+app.patch('/deals/:id', (request, response) => {
+  const dealIndex = deals.findIndex((deal) => deal.id === request.params.id)
+
+  if (dealIndex === -1) {
+    return response.status(404).json({
+      message: 'Deal not found',
+    })
+  }
+
+  const updatedDeal = {
+    ...deals[dealIndex],
+    ...request.body,
+  }
+
+  deals[dealIndex] = updatedDeal
+
+  response.json(updatedDeal)
+})
+
+app.delete('/deals/:id', (request, response) => {
+  const dealIndex = deals.findIndex((deal) => deal.id === request.params.id)
+
+  if (dealIndex === -1) {
+    return response.status(404).json({
+      message: 'Deal not found',
+    })
+  }
+
+  deals.splice(dealIndex, 1)
 
   response.status(204).send()
 })
