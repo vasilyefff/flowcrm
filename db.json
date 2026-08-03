@@ -21,13 +21,13 @@
   ],
   "deals": [
     {
-      "id": "1",
-      "title": "Website redesign",
+      "title": "New website",
       "clientId": "1",
-      "value": 12000,
-      "stage": "proposal",
-      "comment": "Waiting for approval",
-      "createdAt": "2026-07-20T10:00:00.000Z"
+      "value": 15000,
+      "stage": "lead",
+      "comment": "First contact",
+      "id": "1",
+      "createdAt": "2026-08-03T18:59:57.533Z"
     }
   ]
 }

@@ -110,6 +110,7 @@ app.post('/deals', (request, response) => {
   }
 
   deals.push(newDeal)
+  saveDatabase()
 
   response.status(201).json(newDeal)
 })
@@ -129,6 +130,7 @@ app.patch('/deals/:id', (request, response) => {
   }
 
   deals[dealIndex] = updatedDeal
+  saveDatabase()
 
   response.json(updatedDeal)
 })
@@ -143,6 +145,7 @@ app.delete('/deals/:id', (request, response) => {
   }
 
   deals.splice(dealIndex, 1)
+  saveDatabase()
 
   response.status(204).send()
 })
