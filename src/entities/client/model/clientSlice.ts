@@ -1,12 +1,31 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import {
+  createAsyncThunk,
+  createSlice,
+  type PayloadAction,
+} from '@reduxjs/toolkit'
+
+import { getClients } from '@/shared/api/clientApi'
 import type { Client, CreateClientDto } from './types'
+
+export const fetchClients = createAsyncThunk<Client[]>(
+  'clients/fetchClients',
+  async () => {
+    return getClients()
+  },
+)
+
+type ClientsStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 type ClientsState = {
   items: Client[]
+  status: ClientsStatus
+  error: string | null
 }
 
 const initialState: ClientsState = {
   items: [],
+  status: 'idle',
+  error: null,
 }
 
 const clientsSlice = createSlice({
@@ -29,6 +48,22 @@ const clientsSlice = createSlice({
         client.id === action.payload.id ? action.payload : client,
       )
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchClients.pending, (state) => {
+      state.status = 'loading'
+      state.error = null
+    })
+
+    builder.addCase(fetchClients.fulfilled, (state, action) => {
+      state.status = 'succeeded'
+      state.items = action.payload
+    })
+
+    builder.addCase(fetchClients.rejected, (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message ?? 'Failed to load clients'
+    })
   },
 })
 

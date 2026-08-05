@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   addClient,
   deleteClient,
+  fetchClients,
   updateClient,
 } from '@/entities/client/model/clientSlice'
 import type { RootState, AppDispatch } from '@/app/store'
@@ -20,6 +21,10 @@ import { EditClientDialog } from '@/features/client/edit/EditClientDialog'
 export const ClientsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
   const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    dispatch(fetchClients())
+  }, [dispatch])
 
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | ClientStatus>('all')
