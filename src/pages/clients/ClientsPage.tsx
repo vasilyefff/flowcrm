@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  addClient,
+  createClient,
   deleteClient,
   fetchClients,
   updateClient,
@@ -33,7 +33,7 @@ export const ClientsPage = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const handleCreate = (data: CreateClientDto) => {
-    dispatch(addClient(data))
+    dispatch(createClient(data))
   }
 
   const handleDelete = (client: Client) => {

@@ -4,13 +4,23 @@ import {
   type PayloadAction,
 } from '@reduxjs/toolkit'
 
-import { getClients } from '@/shared/api/clientApi'
+import {
+  createClient as createClientApi,
+  getClients,
+} from '@/shared/api/clientApi'
 import type { Client, CreateClientDto } from './types'
 
 export const fetchClients = createAsyncThunk<Client[]>(
   'clients/fetchClients',
   async () => {
     return getClients()
+  },
+)
+
+export const createClient = createAsyncThunk<Client, CreateClientDto>(
+  'clients/createClient',
+  async (clientData) => {
+    return createClientApi(clientData)
   },
 )
 
@@ -63,6 +73,10 @@ const clientsSlice = createSlice({
     builder.addCase(fetchClients.rejected, (state, action) => {
       state.status = 'failed'
       state.error = action.error.message ?? 'Failed to load clients'
+    })
+
+    builder.addCase(createClient.fulfilled, (state, action) => {
+      state.items.push(action.payload)
     })
   },
 })
