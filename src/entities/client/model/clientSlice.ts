@@ -7,8 +7,9 @@ import {
 import {
   createClient as createClientApi,
   getClients,
+  updateClient as updateClientApi,
 } from '@/shared/api/clientApi'
-import type { Client, CreateClientDto } from './types'
+import type { Client, CreateClientDto, UpdateClientDto } from './types'
 
 export const fetchClients = createAsyncThunk<Client[]>(
   'clients/fetchClients',
@@ -23,6 +24,13 @@ export const createClient = createAsyncThunk<Client, CreateClientDto>(
     return createClientApi(clientData)
   },
 )
+
+export const updateClientRequest = createAsyncThunk<
+  Client,
+  { id: string; clientData: UpdateClientDto }
+>('clients/updateClient', async ({ id, clientData }) => {
+  return updateClientApi(id, clientData)
+})
 
 type ClientsStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -77,6 +85,12 @@ const clientsSlice = createSlice({
 
     builder.addCase(createClient.fulfilled, (state, action) => {
       state.items.push(action.payload)
+    })
+
+    builder.addCase(updateClientRequest.fulfilled, (state, action) => {
+      state.items = state.items.map((client) =>
+        client.id === action.payload.id ? action.payload : client,
+      )
     })
   },
 })

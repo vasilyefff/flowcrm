@@ -4,7 +4,7 @@ import {
   createClient,
   deleteClient,
   fetchClients,
-  updateClient,
+  updateClientRequest,
 } from '@/entities/client/model/clientSlice'
 import type { RootState, AppDispatch } from '@/app/store'
 import type {
@@ -62,9 +62,9 @@ export const ClientsPage = () => {
     if (!editClient) return
 
     dispatch(
-      updateClient({
-        ...editClient,
-        ...data,
+      updateClientRequest({
+        id: editClient.id,
+        clientData: data,
       }),
     )
 
