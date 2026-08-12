@@ -8,7 +8,9 @@ import {
   createClient as createClientApi,
   getClients,
   updateClient as updateClientApi,
+  deleteClient as deleteClientApi,
 } from '@/shared/api/clientApi'
+
 import type { Client, CreateClientDto, UpdateClientDto } from './types'
 
 export const fetchClients = createAsyncThunk<Client[]>(
@@ -31,6 +33,15 @@ export const updateClientRequest = createAsyncThunk<
 >('clients/updateClient', async ({ id, clientData }) => {
   return updateClientApi(id, clientData)
 })
+
+export const deleteClientRequest = createAsyncThunk<string, string>(
+  'clients/deleteClient',
+  async (id) => {
+    await deleteClientApi(id)
+
+    return id
+  },
+)
 
 type ClientsStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -57,9 +68,6 @@ const clientsSlice = createSlice({
         createdAt: new Date().toISOString(),
       }
       state.items.push(newClient)
-    },
-    deleteClient: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((client) => client.id !== action.payload)
     },
     updateClient: (state, action: PayloadAction<Client>) => {
       state.items = state.items.map((client) =>
@@ -92,8 +100,12 @@ const clientsSlice = createSlice({
         client.id === action.payload.id ? action.payload : client,
       )
     })
+
+    builder.addCase(deleteClientRequest.fulfilled, (state, action) => {
+      state.items = state.items.filter((client) => client.id !== action.payload)
+    })
   },
 })
 
-export const { addClient, deleteClient, updateClient } = clientsSlice.actions
+export const { addClient, updateClient } = clientsSlice.actions
 export default clientsSlice.reducer

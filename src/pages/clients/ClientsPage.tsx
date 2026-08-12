@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   createClient,
-  deleteClient,
+  deleteClientRequest,
   fetchClients,
   updateClientRequest,
 } from '@/entities/client/model/clientSlice'
@@ -44,7 +44,7 @@ export const ClientsPage = () => {
   const handleConfirmDelete = () => {
     if (!clientToDelete) return
 
-    dispatch(deleteClient(clientToDelete.id))
+    dispatch(deleteClientRequest(clientToDelete.id))
 
     if (editClient?.id === clientToDelete.id) {
       setEditClient(null)

@@ -1,15 +1,6 @@
 {
   "clients": [
     {
-      "id": "1",
-      "name": "Alex Johnson",
-      "email": "alex@example.com",
-      "phone": "+1 555 123 4567",
-      "company": "Google",
-      "status": "inactive",
-      "createdAt": "2026-07-20T10:00:00.000Z"
-    },
-    {
       "id": "2",
       "name": "Maria Smith",
       "email": "maria@example.com",
