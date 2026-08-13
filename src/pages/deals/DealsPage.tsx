@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import type { RootState } from '@/app/store'
+import type { AppDispatch, RootState } from '@/app/store'
+
 import {
   addDeal,
   deleteDeal,
+  fetchDeals,
   updateDeal,
 } from '@/entities/deal/model/dealSlice'
 import type {
@@ -15,7 +17,6 @@ import type {
 import { DealForm } from '@/features/deal/create/DealForm'
 import { EditDealDialog } from '@/features/deal/edit/EditDealDialog'
 import { DeleteDealDialog } from '@/features/deal/delete/DeleteDealDialog'
-
 import { DealList } from '@/entities/deal/ui/DealList'
 
 type DealStageFilter = DealStage | 'all'
@@ -26,7 +27,11 @@ export const DealsPage = () => {
   const [dealToDelete, setDealToDelete] = useState<Deal | null>(null)
   const [stageFilter, setStageFilter] = useState<DealStageFilter>('all')
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    dispatch(fetchDeals())
+  }, [dispatch])
 
   const handleCreateDeal = (data: CreateDealDto) => {
     dispatch(addDeal(data))
