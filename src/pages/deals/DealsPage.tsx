@@ -4,11 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import type { AppDispatch, RootState } from '@/app/store'
 
 import {
-  addDeal,
+  createDealRequest,
   deleteDeal,
   fetchDeals,
   updateDeal,
 } from '@/entities/deal/model/dealSlice'
+import { fetchClients } from '@/entities/client/model/clientSlice'
 import type {
   CreateDealDto,
   Deal,
@@ -31,10 +32,11 @@ export const DealsPage = () => {
 
   useEffect(() => {
     dispatch(fetchDeals())
+    dispatch(fetchClients())
   }, [dispatch])
 
   const handleCreateDeal = (data: CreateDealDto) => {
-    dispatch(addDeal(data))
+    dispatch(createDealRequest(data))
   }
 
   const handleEditDeal = (deal: Deal) => {

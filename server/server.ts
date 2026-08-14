@@ -35,9 +35,12 @@ app.get('/clients/:id', (request, response) => {
 })
 
 app.post('/clients', (request, response) => {
+  const nextId = String(
+    Math.max(0, ...clients.map((client) => Number(client.id))) + 1,
+  )
   const newClient = {
     ...request.body,
-    id: String(clients.length + 1),
+    id: nextId,
     createdAt: new Date().toISOString(),
   }
 
@@ -103,9 +106,12 @@ app.get('/deals/:id', (request, response) => {
 })
 
 app.post('/deals', (request, response) => {
+  const nextId = String(
+    Math.max(0, ...deals.map((deal) => Number(deal.id))) + 1,
+  )
   const newDeal = {
     ...request.body,
-    id: String(deals.length + 1),
+    id: nextId,
     createdAt: new Date().toISOString(),
   }
 

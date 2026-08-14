@@ -1,12 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { Deal, CreateDealDto } from './types'
-import { getDeals } from '@/shared/api/dealApi'
+import { createDeal, getDeals } from '@/shared/api/dealApi'
 
 export const fetchDeals = createAsyncThunk<Deal[]>(
   'deals/fetchDeals',
   async () => {
     return getDeals()
+  },
+)
+
+export const createDealRequest = createAsyncThunk<Deal, CreateDealDto>(
+  'deals/createDeal',
+  async (dealData) => {
+    return createDeal(dealData)
   },
 )
 
@@ -62,6 +69,10 @@ const dealsSlice = createSlice({
     builder.addCase(fetchDeals.rejected, (state, action) => {
       state.status = 'failed'
       state.error = action.error.message ?? 'Failed to load deals'
+    })
+
+    builder.addCase(createDealRequest.fulfilled, (state, action) => {
+      state.items.push(action.payload)
     })
   },
 })
