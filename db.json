@@ -41,8 +41,8 @@
     {
       "title": "Deal3",
       "clientId": "3",
-      "value": 5000,
-      "stage": "won",
+      "value": 10000,
+      "stage": "lost",
       "comment": "",
       "id": "3",
       "createdAt": "2026-08-14T05:59:49.839Z"

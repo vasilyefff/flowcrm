@@ -1,7 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { Deal, CreateDealDto } from './types'
-import { createDeal, getDeals } from '@/shared/api/dealApi'
+import type { Deal, CreateDealDto, UpdateDealDto } from './types'
+import {
+  createDeal,
+  getDeals,
+  updateDeal as updateDealApi,
+} from '@/shared/api/dealApi'
 
 export const fetchDeals = createAsyncThunk<Deal[]>(
   'deals/fetchDeals',
@@ -16,6 +20,13 @@ export const createDealRequest = createAsyncThunk<Deal, CreateDealDto>(
     return createDeal(dealData)
   },
 )
+
+export const updateDealRequest = createAsyncThunk<
+  Deal,
+  { id: string; dealData: UpdateDealDto }
+>('deals/updateDeal', async ({ id, dealData }) => {
+  return updateDealApi(id, dealData)
+})
 
 type DealsState = {
   items: Deal[]
@@ -44,12 +55,6 @@ const dealsSlice = createSlice({
       state.items.push(newDeal)
     },
 
-    updateDeal: (state, action: PayloadAction<Deal>) => {
-      state.items = state.items.map((deal) =>
-        deal.id === action.payload.id ? action.payload : deal,
-      )
-    },
-
     deleteDeal: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((deal) => deal.id !== action.payload)
     },
@@ -74,9 +79,15 @@ const dealsSlice = createSlice({
     builder.addCase(createDealRequest.fulfilled, (state, action) => {
       state.items.push(action.payload)
     })
+
+    builder.addCase(updateDealRequest.fulfilled, (state, action) => {
+      state.items = state.items.map((deal) =>
+        deal.id === action.payload.id ? action.payload : deal,
+      )
+    })
   },
 })
 
-export const { addDeal, updateDeal, deleteDeal } = dealsSlice.actions
+export const { addDeal, deleteDeal } = dealsSlice.actions
 
 export default dealsSlice.reducer

@@ -17,3 +17,5 @@ export type CreateDealDto = {
   stage: DealStage
   comment?: string
 }
+
+export type UpdateDealDto = Partial<CreateDealDto>

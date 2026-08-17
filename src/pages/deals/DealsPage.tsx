@@ -7,7 +7,7 @@ import {
   createDealRequest,
   deleteDeal,
   fetchDeals,
-  updateDeal,
+  updateDealRequest,
 } from '@/entities/deal/model/dealSlice'
 import { fetchClients } from '@/entities/client/model/clientSlice'
 import type {
@@ -61,14 +61,10 @@ export const DealsPage = () => {
   }
 
   const handleUpdateDeal = (dealId: string, data: CreateDealDto) => {
-    const dealToUpdate = deals.find((deal) => deal.id === dealId)
-
-    if (!dealToUpdate) return
-
     dispatch(
-      updateDeal({
-        ...dealToUpdate,
-        ...data,
+      updateDealRequest({
+        id: dealId,
+        dealData: data,
       }),
     )
 
