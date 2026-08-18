@@ -5,16 +5,19 @@ import type { AppDispatch, RootState } from '@/app/store'
 
 import {
   createDealRequest,
-  deleteDeal,
+  deleteDealRequest,
   fetchDeals,
   updateDealRequest,
 } from '@/entities/deal/model/dealSlice'
+
 import { fetchClients } from '@/entities/client/model/clientSlice'
+
 import type {
   CreateDealDto,
   Deal,
   DealStage,
 } from '@/entities/deal/model/types'
+
 import { DealForm } from '@/features/deal/create/DealForm'
 import { EditDealDialog } from '@/features/deal/edit/EditDealDialog'
 import { DeleteDealDialog } from '@/features/deal/delete/DeleteDealDialog'
@@ -52,7 +55,7 @@ export const DealsPage = () => {
   const handleConfirmDelete = () => {
     if (!dealToDelete) return
 
-    dispatch(deleteDeal(dealToDelete.id))
+    dispatch(deleteDealRequest(dealToDelete.id))
     setDealToDelete(null)
   }
 

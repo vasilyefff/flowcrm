@@ -22,3 +22,7 @@ export const updateDeal = async (id: string, dealData: UpdateDealDto) => {
 
   return response.data
 }
+
+export const deleteDeal = async (id: string) => {
+  await api.delete(`/deals/${id}`)
+}

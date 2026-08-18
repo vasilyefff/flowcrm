@@ -30,15 +30,6 @@
       "createdAt": "2026-08-03T18:59:57.533Z"
     },
     {
-      "title": "Deal2",
-      "clientId": "2",
-      "value": 3000,
-      "stage": "negotiation",
-      "comment": "comment",
-      "id": "2",
-      "createdAt": "2026-08-14T05:39:45.555Z"
-    },
-    {
       "title": "Deal3",
       "clientId": "3",
       "value": 10000,
