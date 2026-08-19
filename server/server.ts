@@ -83,6 +83,16 @@ app.delete('/clients/:id', (request, response) => {
     })
   }
 
+  const hasRelatedDeals = deals.some(
+    (deal) => deal.clientId === request.params.id,
+  )
+
+  if (hasRelatedDeals) {
+    return response.status(409).json({
+      message: 'Client cannot be deleted because it has related deals',
+    })
+  }
+
   clients.splice(clientIndex, 1)
   saveDatabase()
 

@@ -8,35 +8,17 @@
       "company": "Bright Solutions",
       "status": "lead",
       "createdAt": "2026-07-20T10:00:00.000Z"
-    },
-    {
-      "name": "Alex Johnson",
-      "email": "alex@example.com",
-      "phone": "+15551234567",
-      "company": "Google",
-      "status": "active",
-      "id": "3",
-      "createdAt": "2026-08-14T05:33:50.325Z"
     }
   ],
   "deals": [
     {
       "title": "New website",
-      "clientId": "1",
+      "clientId": "2",
       "value": 15000,
       "stage": "lead",
       "comment": "First contact",
       "id": "1",
       "createdAt": "2026-08-03T18:59:57.533Z"
-    },
-    {
-      "title": "Deal3",
-      "clientId": "3",
-      "value": 10000,
-      "stage": "lost",
-      "comment": "",
-      "id": "3",
-      "createdAt": "2026-08-14T05:59:49.839Z"
     }
   ]
 }

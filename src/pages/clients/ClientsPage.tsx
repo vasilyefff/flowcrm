@@ -20,6 +20,7 @@ import { EditClientDialog } from '@/features/client/edit/EditClientDialog'
 
 export const ClientsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
+  const error = useSelector((state: RootState) => state.clients.error)
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
@@ -100,7 +101,7 @@ export const ClientsPage = () => {
   return (
     <>
       <div>Clients Page</div>
-
+      {error && <p>{error}</p>}
       <div>
         <input
           value={searchTerm}
