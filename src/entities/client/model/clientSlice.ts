@@ -56,13 +56,13 @@ type ClientsStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 type ClientsState = {
   items: Client[]
-  status: ClientsStatus
+  fetchStatus: ClientsStatus
   error: string | null
 }
 
 const initialState: ClientsState = {
   items: [],
-  status: 'idle',
+  fetchStatus: 'idle',
   error: null,
 }
 
@@ -73,56 +73,47 @@ const clientsSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(fetchClients.pending, (state) => {
-      state.status = 'loading'
+      state.fetchStatus = 'loading'
       state.error = null
     })
     builder.addCase(fetchClients.fulfilled, (state, action) => {
-      state.status = 'succeeded'
+      state.fetchStatus = 'succeeded'
       state.items = action.payload
     })
     builder.addCase(fetchClients.rejected, (state, action) => {
-      state.status = 'failed'
+      state.fetchStatus = 'failed'
       state.error = action.error.message ?? 'Failed to load clients'
     })
 
     builder.addCase(createClient.pending, (state) => {
-      state.status = 'loading'
       state.error = null
     })
     builder.addCase(createClient.fulfilled, (state, action) => {
-      state.status = 'succeeded'
       state.items.push(action.payload)
     })
     builder.addCase(createClient.rejected, (state, action) => {
-      state.status = 'failed'
       state.error = action.error.message ?? 'Failed to create client'
     })
 
     builder.addCase(updateClientRequest.pending, (state) => {
-      state.status = 'loading'
       state.error = null
     })
     builder.addCase(updateClientRequest.fulfilled, (state, action) => {
-      state.status = 'succeeded'
       state.items = state.items.map((client) =>
         client.id === action.payload.id ? action.payload : client,
       )
     })
     builder.addCase(updateClientRequest.rejected, (state, action) => {
-      state.status = 'failed'
       state.error = action.error.message ?? 'Failed to update client'
     })
 
     builder.addCase(deleteClientRequest.pending, (state) => {
-      state.status = 'loading'
       state.error = null
     })
     builder.addCase(deleteClientRequest.fulfilled, (state, action) => {
-      state.status = 'succeeded'
       state.items = state.items.filter((client) => client.id !== action.payload)
     })
     builder.addCase(deleteClientRequest.rejected, (state, action) => {
-      state.status = 'failed'
       state.error = action.payload ?? 'Failed to delete client'
     })
   },

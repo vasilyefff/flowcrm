@@ -1,10 +1,19 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import type { AppDispatch, RootState } from '@/app/store'
 
-import type { RootState } from '@/app/store'
+import { fetchClients } from '@/entities/client/model/clientSlice'
+import { fetchDeals } from '@/entities/deal/model/dealSlice'
 
 export const DashboardPage = () => {
+  const dispatch = useDispatch<AppDispatch>()
   const clients = useSelector((state: RootState) => state.clients.items)
   const deals = useSelector((state: RootState) => state.deals.items)
+
+  useEffect(() => {
+    dispatch(fetchClients())
+    dispatch(fetchDeals())
+  }, [dispatch])
 
   const totalClients = clients.length
 

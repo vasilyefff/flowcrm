@@ -39,7 +39,7 @@ export const deleteDealRequest = createAsyncThunk<string, string>(
 
 type DealsState = {
   items: Deal[]
-  status: DealsStatus
+  fetchStatus: DealsStatus
   error: string | null
 }
 
@@ -47,7 +47,7 @@ type DealsStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState: DealsState = {
   items: [],
-  status: 'idle',
+  fetchStatus: 'idle',
   error: null,
 }
 
@@ -58,56 +58,47 @@ const dealsSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(fetchDeals.pending, (state) => {
-      state.status = 'loading'
+      state.fetchStatus = 'loading'
       state.error = null
     })
     builder.addCase(fetchDeals.fulfilled, (state, action) => {
-      state.status = 'succeeded'
+      state.fetchStatus = 'succeeded'
       state.items = action.payload
     })
     builder.addCase(fetchDeals.rejected, (state, action) => {
-      state.status = 'failed'
+      state.fetchStatus = 'failed'
       state.error = action.error.message ?? 'Failed to load deals'
     })
 
     builder.addCase(createDealRequest.pending, (state) => {
-      state.status = 'loading'
       state.error = null
     })
     builder.addCase(createDealRequest.fulfilled, (state, action) => {
-      state.status = 'succeeded'
       state.items.push(action.payload)
     })
     builder.addCase(createDealRequest.rejected, (state, action) => {
-      state.status = 'failed'
       state.error = action.error.message ?? 'Failed to create deal'
     })
 
     builder.addCase(updateDealRequest.pending, (state) => {
-      state.status = 'loading'
       state.error = null
     })
     builder.addCase(updateDealRequest.fulfilled, (state, action) => {
-      state.status = 'succeeded'
       state.items = state.items.map((deal) =>
         deal.id === action.payload.id ? action.payload : deal,
       )
     })
     builder.addCase(updateDealRequest.rejected, (state, action) => {
-      state.status = 'failed'
       state.error = action.error.message ?? 'Failed to update deal'
     })
 
     builder.addCase(deleteDealRequest.pending, (state) => {
-      state.status = 'loading'
       state.error = null
     })
     builder.addCase(deleteDealRequest.fulfilled, (state, action) => {
-      state.status = 'succeeded'
       state.items = state.items.filter((deal) => deal.id !== action.payload)
     })
     builder.addCase(deleteDealRequest.rejected, (state, action) => {
-      state.status = 'failed'
       state.error = action.error.message ?? 'Failed to delete deal'
     })
   },

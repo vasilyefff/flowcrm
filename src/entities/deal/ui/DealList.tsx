@@ -7,10 +7,21 @@ type DealListProps = {
   onDelete: (id: string) => void
 }
 
-export const DealList = ({ deals, onEdit, onDelete }: DealListProps) => (
-  <>
-    {deals.map((deal) => (
-      <DealCard key={deal.id} deal={deal} onEdit={onEdit} onDelete={onDelete} />
-    ))}
-  </>
-)
+export const DealList = ({ deals, onEdit, onDelete }: DealListProps) => {
+  if (deals.length === 0) {
+    return <p>No deals yet</p>
+  }
+
+  return (
+    <>
+      {deals.map((deal) => (
+        <DealCard
+          key={deal.id}
+          deal={deal}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      ))}
+    </>
+  )
+}

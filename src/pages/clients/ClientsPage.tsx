@@ -21,6 +21,9 @@ import { EditClientDialog } from '@/features/client/edit/EditClientDialog'
 export const ClientsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
   const error = useSelector((state: RootState) => state.clients.error)
+  const fetchStatus = useSelector(
+    (state: RootState) => state.clients.fetchStatus,
+  )
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
@@ -101,6 +104,7 @@ export const ClientsPage = () => {
   return (
     <>
       <div>Clients Page</div>
+      {fetchStatus === 'loading' && <p>Loading clients...</p>}
       {error && <p>{error}</p>}
       <div>
         <input
@@ -135,12 +139,14 @@ export const ClientsPage = () => {
         onCancel={handleCancelDelete}
       />
 
-      <ClientList
-        clients={filteredClients}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
-        hasClients={clients.length > 0}
-      />
+      {fetchStatus === 'succeeded' && (
+        <ClientList
+          clients={filteredClients}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          hasClients={clients.length > 0}
+        />
+      )}
 
       <ClientForm onSubmit={handleCreate} />
     </>

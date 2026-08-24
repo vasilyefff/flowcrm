@@ -27,6 +27,8 @@ type DealStageFilter = DealStage | 'all'
 
 export const DealsPage = () => {
   const deals = useSelector((state: RootState) => state.deals.items)
+  const fetchStatus = useSelector((state: RootState) => state.deals.fetchStatus)
+  const error = useSelector((state: RootState) => state.deals.error)
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null)
   const [dealToDelete, setDealToDelete] = useState<Deal | null>(null)
   const [stageFilter, setStageFilter] = useState<DealStageFilter>('all')
@@ -86,7 +88,7 @@ export const DealsPage = () => {
   return (
     <div>
       <h1>Deals</h1>
-      <p>Total deals: {deals.length}</p>
+      {fetchStatus === 'succeeded' && <p>Total deals: {deals.length}</p>}
       <label>
         Filter by stage:
         <select
@@ -119,11 +121,16 @@ export const DealsPage = () => {
         onCancel={handleCancelDelete}
       />
 
-      <DealList
-        deals={filteredDeals}
-        onEdit={handleEditDeal}
-        onDelete={handleDeleteDeal}
-      />
+      {fetchStatus === 'loading' && <p>Loading deals...</p>}
+      {fetchStatus === 'failed' && <p>{error}</p>}
+
+      {fetchStatus === 'succeeded' && (
+        <DealList
+          deals={filteredDeals}
+          onEdit={handleEditDeal}
+          onDelete={handleDeleteDeal}
+        />
+      )}
     </div>
   )
 }
