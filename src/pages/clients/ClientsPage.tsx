@@ -103,7 +103,7 @@ export const ClientsPage = () => {
 
   return (
     <>
-      <div>Clients Page</div>
+      <h1 className="text-2xl font-semibold text-gray-900">Clients</h1>
       {fetchStatus === 'loading' && <p>Loading clients...</p>}
       {error && <p>{error}</p>}
       <div>

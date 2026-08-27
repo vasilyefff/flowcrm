@@ -54,7 +54,7 @@ export const DashboardPage = () => {
 
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
 
       <div>
         <h2>Total Clients</h2>

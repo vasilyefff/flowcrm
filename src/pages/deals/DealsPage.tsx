@@ -87,7 +87,7 @@ export const DealsPage = () => {
 
   return (
     <div>
-      <h1>Deals</h1>
+      <h1 className="text-2xl font-semibold text-gray-900">Deals</h1>
       {fetchStatus === 'succeeded' && <p>Total deals: {deals.length}</p>}
       <label>
         Filter by stage:
