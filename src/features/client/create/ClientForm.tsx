@@ -1,5 +1,9 @@
 import { useState } from 'react'
 
+import { Input } from '@/shared/ui/Input'
+import { Button } from '@/shared/ui/Button'
+import { Select } from '@/shared/ui/Select'
+
 import type {
   ClientStatus,
   CreateClientDto,
@@ -78,95 +82,60 @@ export const ClientForm = (props: Props) => {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
         <label htmlFor="client-name">Name</label>
-        <input
+        <Input
           id="client-name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name"
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
         />
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
         <label htmlFor="client-email">Email</label>
-        <input
+        <Input
           id="client-email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
         />
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
         <label htmlFor="client-phone">Phone</label>
-        <input
+        <Input
           id="client-phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Phone"
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
         />
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
         <label htmlFor="client-company">Company</label>
-        <input
+        <Input
           id="client-company"
           value={company}
           onChange={(e) => setCompany(e.target.value)}
           placeholder="Company"
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
         />
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
         <label htmlFor="client-status">Status</label>
-        <select
+        <Select
           id="client-status"
           value={status}
           onChange={(e) => setStatus(e.target.value as ClientStatus)}
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
         >
           <option value="lead">Lead</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
-        </select>
+        </Select>
       </div>
 
       {error && <p style={{ color: 'red', margin: 0 }}>{error}</p>}
 
-      <button
-        onClick={handleSubmit}
-        style={{
-          padding: '8px 12px',
-          border: '1px solid #222',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
-        {isEdit ? 'Save' : 'Add client'}
-      </button>
+      <Button onClick={handleSubmit}>{isEdit ? 'Save' : 'Add client'}</Button>
 
       {isEdit && (
         <button

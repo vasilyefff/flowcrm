@@ -8,6 +8,15 @@
       "company": "Bright Solutions",
       "status": "lead",
       "createdAt": "2026-07-20T10:00:00.000Z"
+    },
+    {
+      "name": "John Smith",
+      "email": "john@mail",
+      "phone": "+123",
+      "company": "Corp",
+      "status": "lead",
+      "id": "3",
+      "createdAt": "2026-09-01T05:46:58.875Z"
     }
   ],
   "deals": [
