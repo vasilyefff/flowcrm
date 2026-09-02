@@ -22,6 +22,7 @@ import { DealForm } from '@/features/deal/create/DealForm'
 import { EditDealDialog } from '@/features/deal/edit/EditDealDialog'
 import { DeleteDealDialog } from '@/features/deal/delete/DeleteDealDialog'
 import { DealList } from '@/entities/deal/ui/DealList'
+import { Select } from '@/shared/ui/Select'
 
 type DealStageFilter = DealStage | 'all'
 
@@ -91,7 +92,7 @@ export const DealsPage = () => {
       {fetchStatus === 'succeeded' && <p>Total deals: {deals.length}</p>}
       <label>
         Filter by stage:
-        <select
+        <Select
           value={stageFilter}
           onChange={(event) =>
             setStageFilter(event.target.value as DealStageFilter)
@@ -103,7 +104,7 @@ export const DealsPage = () => {
           <option value="proposal">Proposal</option>
           <option value="won">Won</option>
           <option value="lost">Lost</option>
-        </select>
+        </Select>
       </label>
 
       <DealForm onSubmit={handleCreateDeal} />
@@ -129,6 +130,7 @@ export const DealsPage = () => {
           deals={filteredDeals}
           onEdit={handleEditDeal}
           onDelete={handleDeleteDeal}
+          hasDeals={deals.length > 0}
         />
       )}
     </div>

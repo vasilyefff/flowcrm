@@ -7,28 +7,15 @@ type ModalProps = {
 export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   if (!isOpen) return null
 
-  const overlayStyle = {
-    position: 'fixed' as const,
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    background: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-
-  const modalStyle = {
-    background: 'white',
-    padding: 20,
-    borderRadius: 8,
-    minWidth: 300,
-  }
-
   return (
-    <div style={overlayStyle} onClick={onClose}>
-      <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black/50"
+      onClick={onClose}
+    >
+      <div
+        className="min-w-[300px] rounded-lg bg-white p-5"
+        onClick={(e) => e.stopPropagation()}
+      >
         {children}
       </div>
     </div>

@@ -1,15 +1,31 @@
 import { DealCard } from './DealCard'
+import { EmptyState } from '@/shared/ui/EmptyState'
 import type { Deal } from '@/entities/deal/model/types'
 
 type DealListProps = {
   deals: Deal[]
   onEdit: (deal: Deal) => void
   onDelete: (id: string) => void
+  hasDeals: boolean
 }
 
-export const DealList = ({ deals, onEdit, onDelete }: DealListProps) => {
+export const DealList = ({
+  deals,
+  onEdit,
+  onDelete,
+  hasDeals,
+}: DealListProps) => {
   if (deals.length === 0) {
-    return <p>No deals yet</p>
+    return (
+      <EmptyState
+        title={hasDeals ? 'No results found' : 'No deals yet'}
+        description={
+          hasDeals
+            ? 'Try changing your stage filter.'
+            : 'Create your first deal to start tracking sales.'
+        }
+      />
+    )
   }
 
   return (

@@ -4,6 +4,10 @@ import { useSelector } from 'react-redux'
 import type { RootState } from '@/app/store'
 import type { CreateDealDto, DealStage } from '@/entities/deal/model/types'
 
+import { Button } from '@/shared/ui/Button'
+import { Input } from '@/shared/ui/Input'
+import { Select } from '@/shared/ui/Select'
+
 type Props = {
   onSubmit: (data: CreateDealDto) => void
   initialData?: CreateDealDto
@@ -72,16 +76,11 @@ export const DealForm = ({
         style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
       >
         <label htmlFor="deal-title">Deal title</label>
-        <input
+        <Input
           id="deal-title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Enter deal title"
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
         />
       </div>
 
@@ -90,15 +89,10 @@ export const DealForm = ({
         style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
       >
         <label htmlFor="deal-client">Client</label>
-        <select
+        <Select
           id="deal-client"
           value={clientId}
           onChange={(e) => setClientId(e.target.value)}
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
         >
           <option value="">Select client</option>
           {clients.map((client) => (
@@ -106,7 +100,7 @@ export const DealForm = ({
               {client.name}
             </option>
           ))}
-        </select>
+        </Select>
       </div>
 
       <div
@@ -114,17 +108,12 @@ export const DealForm = ({
         style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
       >
         <label htmlFor="deal-value">Deal value</label>
-        <input
+        <Input
           id="deal-value"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Enter deal value"
           type="number"
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
         />
       </div>
 
@@ -133,22 +122,17 @@ export const DealForm = ({
         style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
       >
         <label htmlFor="deal-stage">Stage</label>
-        <select
+        <Select
           id="deal-stage"
           value={stage}
           onChange={(e) => setStage(e.target.value as DealStage)}
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
         >
           <option value="lead">Lead</option>
           <option value="negotiation">Negotiation</option>
           <option value="proposal">Proposal</option>
           <option value="won">Won</option>
           <option value="lost">Lost</option>
-        </select>
+        </Select>
       </div>
 
       <div
@@ -171,31 +155,14 @@ export const DealForm = ({
 
       {error && <p style={{ color: 'red', margin: 0 }}>{error}</p>}
 
-      <button
-        type="submit"
-        style={{
-          padding: '8px 12px',
-          border: '1px solid #222',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
+      <Button type="submit" variant="primary">
         {isEdit ? 'Save changes' : 'Create deal'}
-      </button>
+      </Button>
 
       {onCancel && (
-        <button
-          type="button"
-          onClick={onCancel}
-          style={{
-            padding: '8px 12px',
-            border: '1px solid #222',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-        >
+        <Button type="button" variant="secondary" onClick={onCancel}>
           Cancel
-        </button>
+        </Button>
       )}
     </form>
   )
