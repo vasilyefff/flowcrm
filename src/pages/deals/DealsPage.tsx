@@ -87,12 +87,26 @@ export const DealsPage = () => {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold text-gray-900">Deals</h1>
-      {fetchStatus === 'succeeded' && <p>Total deals: {deals.length}</p>}
-      <label>
-        Filter by stage:
+    <div className="max-w-5xl">
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold text-slate-900">Deals</h1>
+
+        {fetchStatus === 'succeeded' && (
+          <p className="mt-1 text-sm text-slate-500">
+            Total deals: {deals.length}
+          </p>
+        )}
+      </div>
+      <div className="mb-6 flex max-w-xs flex-col gap-1.5">
+        <label
+          htmlFor="deal-stage-filter"
+          className="text-sm font-medium text-slate-700"
+        >
+          Filter by stage
+        </label>
+
         <Select
+          id="deal-stage-filter"
           value={stageFilter}
           onChange={(event) =>
             setStageFilter(event.target.value as DealStageFilter)
@@ -105,7 +119,7 @@ export const DealsPage = () => {
           <option value="won">Won</option>
           <option value="lost">Lost</option>
         </Select>
-      </label>
+      </div>
 
       <DealForm onSubmit={handleCreateDeal} />
 
@@ -126,12 +140,14 @@ export const DealsPage = () => {
       {fetchStatus === 'failed' && <p>{error}</p>}
 
       {fetchStatus === 'succeeded' && (
-        <DealList
-          deals={filteredDeals}
-          onEdit={handleEditDeal}
-          onDelete={handleDeleteDeal}
-          hasDeals={deals.length > 0}
-        />
+        <div className="mt-6 max-w-md">
+          <DealList
+            deals={filteredDeals}
+            onEdit={handleEditDeal}
+            onDelete={handleDeleteDeal}
+            hasDeals={deals.length > 0}
+          />
+        </div>
       )}
     </div>
   )

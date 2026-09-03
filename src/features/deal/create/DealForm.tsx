@@ -58,24 +58,19 @@ export const DealForm = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="deal-form"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '12px',
-        maxWidth: '420px',
-        padding: '16px',
-        border: '1px solid #ddd',
-        borderRadius: '8px',
-      }}
+      className="flex max-w-md flex-col gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
     >
-      <h2 style={{ margin: 0 }}>{isEdit ? 'Edit deal' : 'Create deal'}</h2>
+      <h2 className="text-lg font-semibold text-slate-900">
+        {isEdit ? 'Edit deal' : 'Create deal'}
+      </h2>
 
-      <div
-        className="deal-form__field"
-        style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
-      >
-        <label htmlFor="deal-title">Deal title</label>
+      <div className="flex flex-col gap-1.5">
+        <label
+          htmlFor="deal-title"
+          className="text-sm font-medium text-slate-700"
+        >
+          Deal title
+        </label>
         <Input
           id="deal-title"
           value={title}
@@ -84,11 +79,13 @@ export const DealForm = ({
         />
       </div>
 
-      <div
-        className="deal-form__field"
-        style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
-      >
-        <label htmlFor="deal-client">Client</label>
+      <div className="flex flex-col gap-1.5">
+        <label
+          htmlFor="deal-client"
+          className="text-sm font-medium text-slate-700"
+        >
+          Client
+        </label>
         <Select
           id="deal-client"
           value={clientId}
@@ -103,11 +100,13 @@ export const DealForm = ({
         </Select>
       </div>
 
-      <div
-        className="deal-form__field"
-        style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
-      >
-        <label htmlFor="deal-value">Deal value</label>
+      <div className="flex flex-col gap-1.5">
+        <label
+          htmlFor="deal-value"
+          className="text-sm font-medium text-slate-700"
+        >
+          Deal value
+        </label>
         <Input
           id="deal-value"
           value={value}
@@ -117,11 +116,13 @@ export const DealForm = ({
         />
       </div>
 
-      <div
-        className="deal-form__field"
-        style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
-      >
-        <label htmlFor="deal-stage">Stage</label>
+      <div className="flex flex-col gap-1.5">
+        <label
+          htmlFor="deal-stage"
+          className="text-sm font-medium text-slate-700"
+        >
+          Stage
+        </label>
         <Select
           id="deal-stage"
           value={stage}
@@ -135,26 +136,27 @@ export const DealForm = ({
         </Select>
       </div>
 
-      <div
-        className="deal-form__field"
-        style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}
-      >
-        <label htmlFor="deal-comment">Comment</label>
+      <div className="flex flex-col gap-1.5">
+        <label
+          htmlFor="deal-comment"
+          className="text-sm font-medium text-slate-700"
+        >
+          Comment
+        </label>
         <textarea
           id="deal-comment"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Add a short comment"
-          style={{
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-          }}
+          className="min-h-24 resize-y rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
         />
       </div>
 
-      {error && <p style={{ color: 'red', margin: 0 }}>{error}</p>}
-
+      {error && (
+        <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          {error}
+        </p>
+      )}
       <Button type="submit" variant="primary">
         {isEdit ? 'Save changes' : 'Create deal'}
       </Button>
