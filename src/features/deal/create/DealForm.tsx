@@ -58,7 +58,11 @@ export const DealForm = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex max-w-md flex-col gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
+      className={
+        isEdit
+          ? 'flex w-full flex-col gap-4'
+          : 'flex w-full max-w-md flex-col gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm'
+      }
     >
       <h2 className="text-lg font-semibold text-slate-900">
         {isEdit ? 'Edit deal' : 'Create deal'}

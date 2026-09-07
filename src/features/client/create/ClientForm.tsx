@@ -50,11 +50,7 @@ export const ClientForm = (props: Props) => {
       status,
     }
 
-    if (isEdit) {
-      onSubmit(formData)
-    } else {
-      onSubmit(formData)
-    }
+    onSubmit(formData)
 
     if (!isEdit) {
       setName('')
@@ -67,63 +63,90 @@ export const ClientForm = (props: Props) => {
 
   return (
     <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '12px',
-        maxWidth: '420px',
-        padding: '16px',
-        border: '1px solid #ddd',
-        borderRadius: '8px',
-        marginTop: 20,
-      }}
+      className={
+        isEdit
+          ? 'w-full space-y-4'
+          : 'w-full max-w-md space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm'
+      }
     >
-      <h3 style={{ margin: 0 }}>{isEdit ? 'Edit Client' : 'Add Client'}</h3>
+      <h3 className="text-lg font-semibold text-slate-900">
+        {isEdit ? 'Edit Client' : 'Add Client'}
+      </h3>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <label htmlFor="client-name">Name</label>
+      <div className="space-y-1.5">
+        <label
+          htmlFor="client-name"
+          className="text-sm font-medium text-slate-700"
+        >
+          Name
+        </label>
         <Input
           id="client-name"
+          className="w-full"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name"
         />
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <label htmlFor="client-email">Email</label>
+      <div className="space-y-1.5">
+        <label
+          htmlFor="client-email"
+          className="text-sm font-medium text-slate-700"
+        >
+          Email
+        </label>
         <Input
           id="client-email"
+          className="w-full"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
         />
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <label htmlFor="client-phone">Phone</label>
+      <div className="space-y-1.5">
+        <label
+          htmlFor="client-phone"
+          className="text-sm font-medium text-slate-700"
+        >
+          Phone
+        </label>
         <Input
           id="client-phone"
+          className="w-full"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Phone"
         />
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <label htmlFor="client-company">Company</label>
+      <div className="space-y-1.5">
+        <label
+          htmlFor="client-company"
+          className="text-sm font-medium text-slate-700"
+        >
+          Company
+        </label>
         <Input
           id="client-company"
+          className="w-full"
           value={company}
           onChange={(e) => setCompany(e.target.value)}
           placeholder="Company"
         />
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <label htmlFor="client-status">Status</label>
+      <div className="space-y-1.5">
+        <label
+          htmlFor="client-status"
+          className="text-sm font-medium text-slate-700"
+        >
+          Status
+        </label>
         <Select
           id="client-status"
+          className="w-full"
           value={status}
           onChange={(e) => setStatus(e.target.value as ClientStatus)}
         >
@@ -133,22 +156,18 @@ export const ClientForm = (props: Props) => {
         </Select>
       </div>
 
-      {error && <p style={{ color: 'red', margin: 0 }}>{error}</p>}
+      {error && <p className="text-sm font-medium text-red-600">{error}</p>}
 
-      <Button onClick={handleSubmit}>{isEdit ? 'Save' : 'Add client'}</Button>
+      {isEdit ? (
+        <div className="flex flex-col gap-3">
+          <Button onClick={handleSubmit}>Save</Button>
 
-      {isEdit && (
-        <button
-          onClick={onCancel}
-          style={{
-            padding: '8px 12px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-        >
-          Cancel
-        </button>
+          <Button variant="secondary" onClick={onCancel}>
+            Cancel
+          </Button>
+        </div>
+      ) : (
+        <Button onClick={handleSubmit}>Add client</Button>
       )}
     </div>
   )

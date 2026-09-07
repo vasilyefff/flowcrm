@@ -28,6 +28,15 @@
       "comment": "First contact",
       "id": "1",
       "createdAt": "2026-09-03T18:23:33.801Z"
+    },
+    {
+      "title": "New Deal",
+      "clientId": "2",
+      "value": 450000,
+      "stage": "negotiation",
+      "comment": "",
+      "id": "2",
+      "createdAt": "2026-09-07T16:48:48.703Z"
     }
   ]
 }

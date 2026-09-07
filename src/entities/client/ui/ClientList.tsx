@@ -29,7 +29,15 @@ export const ClientList = ({
   }
 
   return (
-    <div>
+    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid grid-cols-[1.4fr_1.8fr_1.2fr_0.7fr_1fr] items-center gap-4 border-b border-slate-200 px-4 py-3 text-xs font-medium uppercase tracking-wide text-slate-500">
+        <div>Client</div>
+        <div>Contact</div>
+        <div>Company</div>
+        <div>Status</div>
+        <div className="text-right">Actions</div>
+      </div>
+
       {clients.map((client) => (
         <ClientCard
           key={client.id}

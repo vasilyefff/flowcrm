@@ -13,7 +13,7 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
       onClick={onClose}
     >
       <div
-        className="min-w-[300px] rounded-lg bg-white p-5"
+        className="w-full max-w-md rounded-lg bg-white p-5 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         {children}

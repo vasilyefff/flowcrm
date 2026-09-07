@@ -30,6 +30,7 @@ export const DealsPage = () => {
   const deals = useSelector((state: RootState) => state.deals.items)
   const fetchStatus = useSelector((state: RootState) => state.deals.fetchStatus)
   const error = useSelector((state: RootState) => state.deals.error)
+
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null)
   const [dealToDelete, setDealToDelete] = useState<Deal | null>(null)
   const [stageFilter, setStageFilter] = useState<DealStageFilter>('all')
@@ -51,7 +52,9 @@ export const DealsPage = () => {
 
   const handleDeleteDeal = (dealId: string) => {
     const deal = deals.find((deal) => deal.id === dealId)
+
     if (!deal) return
+
     setDealToDelete(deal)
   }
 
@@ -87,7 +90,7 @@ export const DealsPage = () => {
   }
 
   return (
-    <div className="max-w-5xl">
+    <div className="max-w-6xl">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-slate-900">Deals</h1>
 
@@ -97,31 +100,49 @@ export const DealsPage = () => {
           </p>
         )}
       </div>
-      <div className="mb-6 flex max-w-xs flex-col gap-1.5">
-        <label
-          htmlFor="deal-stage-filter"
-          className="text-sm font-medium text-slate-700"
-        >
-          Filter by stage
-        </label>
 
-        <Select
-          id="deal-stage-filter"
-          value={stageFilter}
-          onChange={(event) =>
-            setStageFilter(event.target.value as DealStageFilter)
-          }
-        >
-          <option value="all">All</option>
-          <option value="lead">Lead</option>
-          <option value="negotiation">Negotiation</option>
-          <option value="proposal">Proposal</option>
-          <option value="won">Won</option>
-          <option value="lost">Lost</option>
-        </Select>
+      <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+        <div className="space-y-6">
+          <div className="flex max-w-xs flex-col gap-1.5">
+            <label
+              htmlFor="deal-stage-filter"
+              className="text-sm font-medium text-slate-700"
+            >
+              Filter by stage
+            </label>
+
+            <Select
+              id="deal-stage-filter"
+              value={stageFilter}
+              onChange={(event) =>
+                setStageFilter(event.target.value as DealStageFilter)
+              }
+            >
+              <option value="all">All</option>
+              <option value="lead">Lead</option>
+              <option value="negotiation">Negotiation</option>
+              <option value="proposal">Proposal</option>
+              <option value="won">Won</option>
+              <option value="lost">Lost</option>
+            </Select>
+          </div>
+
+          {fetchStatus === 'loading' && <p>Loading deals...</p>}
+
+          {fetchStatus === 'failed' && <p>{error}</p>}
+
+          {fetchStatus === 'succeeded' && (
+            <DealList
+              deals={filteredDeals}
+              onEdit={handleEditDeal}
+              onDelete={handleDeleteDeal}
+              hasDeals={deals.length > 0}
+            />
+          )}
+        </div>
+
+        <DealForm onSubmit={handleCreateDeal} />
       </div>
-
-      <DealForm onSubmit={handleCreateDeal} />
 
       <EditDealDialog
         deal={selectedDeal}
@@ -135,20 +156,6 @@ export const DealsPage = () => {
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
       />
-
-      {fetchStatus === 'loading' && <p>Loading deals...</p>}
-      {fetchStatus === 'failed' && <p>{error}</p>}
-
-      {fetchStatus === 'succeeded' && (
-        <div className="mt-6 max-w-md">
-          <DealList
-            deals={filteredDeals}
-            onEdit={handleEditDeal}
-            onDelete={handleDeleteDeal}
-            hasDeals={deals.length > 0}
-          />
-        </div>
-      )}
     </div>
   )
 }

@@ -17,6 +17,8 @@ import { ClientForm } from '@/features/client/create/ClientForm'
 import { ClientList } from '@/entities/client/ui/ClientList'
 import { DeleteClientDialog } from '@/features/client/delete/DeleteClientDialog'
 import { EditClientDialog } from '@/features/client/edit/EditClientDialog'
+import { Input } from '@/shared/ui/Input'
+import { Select } from '@/shared/ui/Select'
 
 export const ClientsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
@@ -102,17 +104,23 @@ export const ClientsPage = () => {
   })
 
   return (
-    <>
-      <h1 className="text-2xl font-semibold text-gray-900">Clients</h1>
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-2xl font-semibold text-slate-900">Clients</h1>
+        <p className="text-sm text-slate-500">
+          Manage your customer relationships
+        </p>
+      </div>
       {fetchStatus === 'loading' && <p>Loading clients...</p>}
       {error && <p>{error}</p>}
-      <div>
-        <input
+      <div className="flex gap-3">
+        <Input
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search clients..."
         />
-        <select
+
+        <Select
           value={statusFilter}
           onChange={(e) =>
             setStatusFilter(e.target.value as 'all' | ClientStatus)
@@ -122,7 +130,7 @@ export const ClientsPage = () => {
           <option value="lead">Lead</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
-        </select>
+        </Select>
       </div>
 
       <EditClientDialog
@@ -149,6 +157,6 @@ export const ClientsPage = () => {
       )}
 
       <ClientForm onSubmit={handleCreate} />
-    </>
+    </div>
   )
 }
