@@ -111,26 +111,43 @@ export const ClientsPage = () => {
           Manage your customer relationships
         </p>
       </div>
+
       {fetchStatus === 'loading' && <p>Loading clients...</p>}
       {error && <p>{error}</p>}
-      <div className="flex gap-3">
-        <Input
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search clients..."
-        />
 
-        <Select
-          value={statusFilter}
-          onChange={(e) =>
-            setStatusFilter(e.target.value as 'all' | ClientStatus)
-          }
-        >
-          <option value="all">All</option>
-          <option value="lead">Lead</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </Select>
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="space-y-6">
+          <div className="flex gap-3">
+            <Input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search clients..."
+            />
+
+            <Select
+              value={statusFilter}
+              onChange={(e) =>
+                setStatusFilter(e.target.value as 'all' | ClientStatus)
+              }
+            >
+              <option value="all">All</option>
+              <option value="lead">Lead</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </Select>
+          </div>
+
+          {fetchStatus === 'succeeded' && (
+            <ClientList
+              clients={filteredClients}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+              hasClients={clients.length > 0}
+            />
+          )}
+        </div>
+
+        <ClientForm onSubmit={handleCreate} />
       </div>
 
       <EditClientDialog
@@ -146,17 +163,6 @@ export const ClientsPage = () => {
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
       />
-
-      {fetchStatus === 'succeeded' && (
-        <ClientList
-          clients={filteredClients}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          hasClients={clients.length > 0}
-        />
-      )}
-
-      <ClientForm onSubmit={handleCreate} />
     </div>
   )
 }

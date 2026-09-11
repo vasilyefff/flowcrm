@@ -11,11 +11,17 @@ const variantClasses = {
   danger: 'bg-red-600 text-white hover:bg-red-700',
 }
 
-export const Button = ({ children, variant = 'primary', ...props }: Props) => {
+export const Button = ({
+  children,
+  variant = 'primary',
+  className = '',
+  ...props
+}: Props) => {
   return (
     <button
       {...props}
-      className={`rounded-md px-3 py-2 text-sm font-medium cursor-pointer ${variantClasses[variant]}`}
+      className={`rounded-md px-3 py-2 text-sm font-medium cursor-pointer
+  ${variantClasses[variant]} ${className}`}
     >
       {children}
     </button>
