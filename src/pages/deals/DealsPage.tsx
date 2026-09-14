@@ -127,9 +127,22 @@ export const DealsPage = () => {
             </Select>
           </div>
 
-          {fetchStatus === 'loading' && <p>Loading deals...</p>}
+          {fetchStatus === 'loading' && (
+            <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-500 shadow-sm">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600" />
+              <p>Loading deals...</p>
+            </div>
+          )}
 
-          {fetchStatus === 'failed' && <p>{error}</p>}
+          {error && (
+            <div
+              role="alert"
+              className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+            >
+              <p className="font-medium text-red-800">Something went wrong</p>
+              <p className="mt-1">{error}</p>
+            </div>
+          )}
 
           {fetchStatus === 'succeeded' && (
             <DealList
