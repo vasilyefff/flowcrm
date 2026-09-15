@@ -90,7 +90,7 @@ export const DealsPage = () => {
   }
 
   return (
-    <div className="max-w-6xl">
+    <div>
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-slate-900">Deals</h1>
 
@@ -101,7 +101,7 @@ export const DealsPage = () => {
         )}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
         <div className="space-y-6">
           <div className="flex max-w-xs flex-col gap-1.5">
             <label

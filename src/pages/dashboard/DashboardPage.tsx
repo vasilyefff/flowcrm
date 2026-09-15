@@ -83,7 +83,11 @@ export const DashboardPage = () => {
           accentClassName="bg-emerald-500"
         />
 
-        <StatCard title="Leads" value={leads} accentClassName="bg-violet-500" />
+        <StatCard
+          title="Lead Clients"
+          value={leads}
+          accentClassName="bg-violet-500"
+        />
       </div>
 
       <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">

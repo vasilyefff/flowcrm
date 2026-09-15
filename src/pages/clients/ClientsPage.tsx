@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
+  clearClientError,
   createClient,
   deleteClientRequest,
   fetchClients,
@@ -122,15 +123,24 @@ export const ClientsPage = () => {
       {error && (
         <div
           role="alert"
-          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+          className="relative max-w-xl rounded-xl border border-red-200 bg-red-50 p-4 pr-12 text-sm text-red-700 shadow-sm"
         >
+          <button
+            type="button"
+            aria-label="Close error"
+            onClick={() => dispatch(clearClientError())}
+            className="absolute right-3 top-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-xl font-semibold leading-none text-red-500 transition hover:bg-red-100 hover:text-red-700"
+          >
+            ×
+          </button>
+
           <p className="font-medium text-red-800">Something went wrong</p>
           <p className="mt-1">{error}</p>
         </div>
       )}
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
-        <div className="space-y-6">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="space-y-4">
           <div className="flex gap-3">
             <Input
               value={searchTerm}

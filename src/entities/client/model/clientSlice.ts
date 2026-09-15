@@ -69,7 +69,11 @@ const initialState: ClientsState = {
 const clientsSlice = createSlice({
   name: 'clients',
   initialState,
-  reducers: {},
+  reducers: {
+    clearClientError: (state) => {
+      state.error = null
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchClients.pending, (state) => {
@@ -119,4 +123,5 @@ const clientsSlice = createSlice({
   },
 })
 
+export const { clearClientError } = clientsSlice.actions
 export default clientsSlice.reducer

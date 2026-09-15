@@ -21,22 +21,13 @@
   ],
   "deals": [
     {
-      "title": "Create website",
+      "title": "Test deal",
       "clientId": "2",
-      "value": 35000,
+      "value": 350000,
       "stage": "lead",
-      "comment": "First contact",
+      "comment": "Test",
       "id": "1",
-      "createdAt": "2026-09-03T18:23:33.801Z"
-    },
-    {
-      "title": "New Deal",
-      "clientId": "2",
-      "value": 450000,
-      "stage": "won",
-      "comment": "",
-      "id": "2",
-      "createdAt": "2026-09-07T16:48:48.703Z"
+      "createdAt": "2026-09-15T05:10:07.537Z"
     }
   ]
 }

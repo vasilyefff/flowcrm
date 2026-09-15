@@ -40,6 +40,10 @@ app.post('/clients', (request, response) => {
   )
   const newClient = {
     ...request.body,
+    name: request.body.name.trim(),
+    email: request.body.email.trim(),
+    phone: request.body.phone.trim(),
+    company: request.body.company.trim(),
     id: nextId,
     createdAt: new Date().toISOString(),
   }
@@ -61,9 +65,27 @@ app.patch('/clients/:id', (request, response) => {
     })
   }
 
+  const sanitizedUpdates = {
+    ...request.body,
+    ...(typeof request.body.name === 'string' && {
+      name: request.body.name.trim(),
+    }),
+    ...(typeof request.body.email === 'string' && {
+      email: request.body.email.trim(),
+    }),
+
+    ...(typeof request.body.phone === 'string' && {
+      phone: request.body.phone.trim(),
+    }),
+
+    ...(typeof request.body.company === 'string' && {
+      company: request.body.company.trim(),
+    }),
+  }
+
   const updatedClient = {
     ...clients[clientIndex],
-    ...request.body,
+    ...sanitizedUpdates,
   }
 
   clients[clientIndex] = updatedClient
@@ -121,6 +143,8 @@ app.post('/deals', (request, response) => {
   )
   const newDeal = {
     ...request.body,
+    title: request.body.title.trim(),
+    comment: request.body.comment.trim(),
     id: nextId,
     createdAt: new Date().toISOString(),
   }
@@ -140,9 +164,21 @@ app.patch('/deals/:id', (request, response) => {
     })
   }
 
+  const sanitizedUpdates = {
+    ...request.body,
+
+    ...(typeof request.body.title === 'string' && {
+      title: request.body.title.trim(),
+    }),
+
+    ...(typeof request.body.comment === 'string' && {
+      comment: request.body.comment.trim(),
+    }),
+  }
+
   const updatedDeal = {
     ...deals[dealIndex],
-    ...request.body,
+    ...sanitizedUpdates,
   }
 
   deals[dealIndex] = updatedDeal

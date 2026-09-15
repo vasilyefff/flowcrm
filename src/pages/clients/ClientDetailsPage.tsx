@@ -7,6 +7,7 @@ import { fetchClients } from '@/entities/client/model/clientSlice'
 import { fetchDeals } from '@/entities/deal/model/dealSlice'
 
 import { Badge } from '@/shared/ui/Badge'
+import { EmptyState } from '@/shared/ui/EmptyState'
 
 export const ClientDetailsPage = () => {
   const { clientId } = useParams()
@@ -28,15 +29,33 @@ export const ClientDetailsPage = () => {
   }, [dispatch])
 
   if (fetchStatus === 'loading' || fetchStatus === 'idle') {
-    return <p>Loading client...</p>
+    return (
+      <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-500 shadow-sm">
+        <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600" />
+        <p>Loading client...</p>
+      </div>
+    )
   }
 
   if (fetchStatus === 'failed') {
-    return <p>{error}</p>
+    return (
+      <div
+        role="alert"
+        className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+      >
+        <p className="font-medium text-red-800">Something went wrong</p>
+        <p className="mt-1">{error}</p>
+      </div>
+    )
   }
 
   if (!client) {
-    return <p>Client not found</p>
+    return (
+      <EmptyState
+        title="Client not found"
+        description="The client you are looking for does not exist."
+      />
+    )
   }
 
   return (

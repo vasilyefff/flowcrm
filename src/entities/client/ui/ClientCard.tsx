@@ -12,10 +12,10 @@ type ClientCardProps = {
 export const ClientCard = ({ client, onDelete, onEdit }: ClientCardProps) => {
   return (
     <div className="border-b border-slate-200 px-4 py-4 md:grid md:grid-cols-[1.4fr_1.8fr_1.2fr_0.7fr_1fr] md:items-center md:gap-4">
-      <div className="mb-3 flex items-center justify-between md:mb-0 md:block">
+      <div className="mb-3 flex items-center gap-3 md:mb-0 md:block">
         <p className="font-medium text-slate-900">{client.name}</p>
 
-        <div className="md:hidden">
+        <div className="ml-auto shrink-0 md:hidden">
           <Badge variant={client.status}>{client.status}</Badge>
         </div>
       </div>
@@ -32,17 +32,17 @@ export const ClientCard = ({ client, onDelete, onEdit }: ClientCardProps) => {
       <div className="hidden md:flex">
         <Badge variant={client.status}>{client.status}</Badge>
       </div>
-      <div className="flex flex-col items-center gap-2">
+      <div className="grid grid-cols-3 gap-2 md:flex md:flex-col md:items-center">
         <Link
           to={`/clients/${client.id}`}
-          className="flex w-20 items-center justify-center text-sm font-medium text-blue-600 hover:text-blue-700"
+          className="flex w-full items-center justify-center text-sm font-medium text-blue-600 hover:text-blue-700 md:w-20"
         >
           Details
         </Link>
 
         <Button
           variant="secondary"
-          className="w-20"
+          className="w-full md:w-20"
           onClick={() => onEdit(client)}
         >
           Edit
@@ -50,7 +50,7 @@ export const ClientCard = ({ client, onDelete, onEdit }: ClientCardProps) => {
 
         <Button
           variant="danger"
-          className="w-20"
+          className="w-full md:w-20"
           onClick={() => onDelete(client)}
         >
           Delete
