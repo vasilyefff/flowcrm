@@ -17,6 +17,78 @@
       "status": "lead",
       "id": "3",
       "createdAt": "2026-09-01T05:46:58.875Z"
+    },
+    {
+      "name": "Anna Petrova",
+      "email": "anna@example.com",
+      "phone": "+1 555 111 2233",
+      "company": "Nova Digital",
+      "status": "active",
+      "id": "4",
+      "createdAt": "2026-09-16T05:00:00.000Z"
+    },
+    {
+      "name": "Michael Brown",
+      "email": "michael@example.com",
+      "phone": "+1 555 222 3344",
+      "company": "Northstar",
+      "status": "lead",
+      "id": "5",
+      "createdAt": "2026-09-16T05:10:00.000Z"
+    },
+    {
+      "name": "Sophie Miller",
+      "email": "sophie@example.com",
+      "phone": "+1 555 333 4455",
+      "company": "Pixel Works",
+      "status": "inactive",
+      "id": "6",
+      "createdAt": "2026-09-16T05:20:00.000Z"
+    },
+    {
+      "name": "Daniel Wilson",
+      "email": "daniel@example.com",
+      "phone": "+1 555 444 5566",
+      "company": "Vertex Labs",
+      "status": "active",
+      "id": "7",
+      "createdAt": "2026-09-16T05:30:00.000Z"
+    },
+    {
+      "name": "Emma Davis",
+      "email": "emma@example.com",
+      "phone": "+1 555 555 6677",
+      "company": "Cloudline",
+      "status": "lead",
+      "id": "8",
+      "createdAt": "2026-09-16T05:40:00.000Z"
+    },
+    {
+      "name": "Robert Taylor",
+      "email": "robert@example.com",
+      "phone": "+1 555 666 7788",
+      "company": "Bright Labs",
+      "status": "active",
+      "id": "9",
+      "createdAt": "2026-09-16T05:50:00.000Z"
+    },
+    {
+      "name": "Olivia Anderson",
+      "email": "olivia@example.com",
+      "phone": "+1 555 777 8899",
+      "company": "Orbit Systems",
+      "status": "inactive",
+      "id": "10",
+      "createdAt": "2026-09-16T06:00:00.000Z"
+    },
+    {
+      "name": "James Martin",
+      "email": "james@example.com",
+      "phone": "+1 555 888 9900",
+      "company": "Core Studio",
+      "status": "lead",
+      "id": "11",
+      "createdAt": "2026-09-16T06:10:00.000Z"
     }
   ],
   "deals": [

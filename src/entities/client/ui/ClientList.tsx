@@ -29,8 +29,8 @@ export const ClientList = ({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-      <div className="hidden md:grid md:grid-cols-[1.4fr_1.8fr_1.2fr_0.7fr_1fr] md:items-center md:gap-4 md:border-b md:border-slate-200 md:px-4 md:py-3 md:text-xs md:font-medium md:uppercase md:tracking-wide md:text-slate-500">
+    <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="hidden md:sticky md:top-0 md:z-10 md:grid md:grid-cols-[1.4fr_1.8fr_1.2fr_0.7fr_1fr] md:items-center md:gap-4 md:border-b md:border-slate-200 md:bg-white md:px-4 md:py-3 md:text-xs md:font-medium md:uppercase md:tracking-wide md:text-slate-500">
         <div>Client</div>
         <div>Contact</div>
         <div>Company</div>

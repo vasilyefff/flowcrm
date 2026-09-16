@@ -20,6 +20,7 @@ import { DeleteClientDialog } from '@/features/client/delete/DeleteClientDialog'
 import { EditClientDialog } from '@/features/client/edit/EditClientDialog'
 import { Input } from '@/shared/ui/Input'
 import { Select } from '@/shared/ui/Select'
+import { ScrollablePanel } from '@/shared/ui/ScrollablePanel'
 
 export const ClientsPage = () => {
   const clients = useSelector((state: RootState) => state.clients.items)
@@ -162,12 +163,14 @@ export const ClientsPage = () => {
           </div>
 
           {fetchStatus === 'succeeded' && (
-            <ClientList
-              clients={filteredClients}
-              onDelete={handleDelete}
-              onEdit={handleEdit}
-              hasClients={clients.length > 0}
-            />
+            <ScrollablePanel>
+              <ClientList
+                clients={filteredClients}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+                hasClients={clients.length > 0}
+              />
+            </ScrollablePanel>
           )}
         </div>
 
