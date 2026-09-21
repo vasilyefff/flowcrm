@@ -100,6 +100,87 @@
       "comment": "Test",
       "id": "1",
       "createdAt": "2026-09-15T05:10:07.537Z"
+    },
+    {
+      "title": "Website redesign",
+      "clientId": "11",
+      "value": 180000,
+      "stage": "proposal",
+      "comment": "Waiting for client feedback",
+      "id": "2",
+      "createdAt": "2026-09-15T06:00:00.000Z"
+    },
+    {
+      "title": "CRM integration",
+      "clientId": "2",
+      "value": 420000,
+      "stage": "negotiation",
+      "comment": "Discussing final scope",
+      "id": "3",
+      "createdAt": "2026-09-15T07:00:00.000Z"
+    },
+    {
+      "title": "Support contract",
+      "clientId": "11",
+      "value": 95000,
+      "stage": "won",
+      "comment": "Contract signed",
+      "id": "4",
+      "createdAt": "2026-09-15T08:00:00.000Z"
+    },
+    {
+      "title": "Mobile application",
+      "clientId": "2",
+      "value": 560000,
+      "stage": "lost",
+      "comment": "Client chose another vendor",
+      "id": "5",
+      "createdAt": "2026-09-15T09:00:00.000Z"
+    },
+    {
+      "title": "Analytics dashboard",
+      "clientId": "11",
+      "value": 270000,
+      "stage": "lead",
+      "comment": "Initial discussion",
+      "id": "6",
+      "createdAt": "2026-09-15T10:00:00.000Z"
+    },
+    {
+      "title": "Landing page",
+      "clientId": "2",
+      "value": 120000,
+      "stage": "proposal",
+      "comment": "Proposal sent",
+      "id": "7",
+      "createdAt": "2026-09-15T11:00:00.000Z"
+    },
+    {
+      "title": "Internal portal",
+      "clientId": "11",
+      "value": 310000,
+      "stage": "negotiation",
+      "comment": "Budget discussion",
+      "id": "8",
+      "createdAt": "2026-09-15T12:00:00.000Z"
+    },
+    {
+      "title": "SEO package",
+      "clientId": "2",
+      "value": 80000,
+      "stage": "won",
+      "comment": "Approved",
+      "id": "9",
+      "createdAt": "2026-09-15T13:00:00.000Z"
+    },
+    {
+      "title": "E-commerce update",
+      "clientId": "11",
+      "value": 225000,
+      "stage": "lost",
+      "comment": "Project postponed",
+      "id": "10",
+      "createdAt": "2026-09-15T14:00:00.000Z"
     }
   ]
 }

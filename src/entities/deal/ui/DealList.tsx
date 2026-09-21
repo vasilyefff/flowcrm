@@ -29,7 +29,7 @@ export const DealList = ({
   }
 
   return (
-    <>
+    <div className="space-y-3 px-3 py-3">
       {deals.map((deal) => (
         <DealCard
           key={deal.id}
@@ -38,6 +38,6 @@ export const DealList = ({
           onDelete={onDelete}
         />
       ))}
-    </>
+    </div>
   )
 }

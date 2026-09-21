@@ -23,6 +23,9 @@ import { EditDealDialog } from '@/features/deal/edit/EditDealDialog'
 import { DeleteDealDialog } from '@/features/deal/delete/DeleteDealDialog'
 import { DealList } from '@/entities/deal/ui/DealList'
 import { Select } from '@/shared/ui/Select'
+import { ScrollablePanel } from '@/shared/ui/ScrollablePanel'
+import { Button } from '@/shared/ui/Button'
+import { Modal } from '@/shared/ui/Modal'
 
 type DealStageFilter = DealStage | 'all'
 
@@ -34,6 +37,7 @@ export const DealsPage = () => {
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null)
   const [dealToDelete, setDealToDelete] = useState<Deal | null>(null)
   const [stageFilter, setStageFilter] = useState<DealStageFilter>('all')
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
   const dispatch = useDispatch<AppDispatch>()
 
@@ -103,6 +107,16 @@ export const DealsPage = () => {
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
         <div className="space-y-6">
+          <div className="lg:hidden">
+            <Button
+              type="button"
+              variant="primary"
+              onClick={() => setIsCreateModalOpen(true)}
+            >
+              Create deal
+            </Button>
+          </div>
+
           <div className="flex max-w-xs flex-col gap-1.5">
             <label
               htmlFor="deal-stage-filter"
@@ -145,17 +159,31 @@ export const DealsPage = () => {
           )}
 
           {fetchStatus === 'succeeded' && (
-            <DealList
-              deals={filteredDeals}
-              onEdit={handleEditDeal}
-              onDelete={handleDeleteDeal}
-              hasDeals={deals.length > 0}
-            />
+            <ScrollablePanel>
+              <DealList
+                deals={filteredDeals}
+                onEdit={handleEditDeal}
+                onDelete={handleDeleteDeal}
+                hasDeals={deals.length > 0}
+              />
+            </ScrollablePanel>
           )}
         </div>
-
-        <DealForm onSubmit={handleCreateDeal} />
+        <div className="hidden lg:block">
+          <DealForm onSubmit={handleCreateDeal} />
+        </div>
       </div>
+
+      <Modal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+      >
+        <DealForm
+          onSubmit={handleCreateDeal}
+          embedded
+          onCancel={() => setIsCreateModalOpen(false)}
+        />
+      </Modal>
 
       <EditDealDialog
         deal={selectedDeal}

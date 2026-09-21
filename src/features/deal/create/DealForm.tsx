@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import type { RootState } from '@/app/store'
@@ -13,6 +13,7 @@ type Props = {
   initialData?: CreateDealDto
   isEdit?: boolean
   onCancel?: () => void
+  embedded?: boolean
 }
 
 export const DealForm = ({
@@ -20,7 +21,10 @@ export const DealForm = ({
   initialData,
   isEdit,
   onCancel,
+  embedded,
 }: Props) => {
+  const formId = useId()
+
   const clients = useSelector((state: RootState) => state.clients.items)
   const [clientId, setClientId] = useState(initialData?.clientId || '')
   const [title, setTitle] = useState(initialData?.title || '')
@@ -59,7 +63,7 @@ export const DealForm = ({
     <form
       onSubmit={handleSubmit}
       className={
-        isEdit
+        isEdit || embedded
           ? 'flex w-full flex-col gap-4'
           : 'flex w-full max-w-md flex-col gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm'
       }
@@ -70,13 +74,14 @@ export const DealForm = ({
 
       <div className="flex flex-col gap-1.5">
         <label
-          htmlFor="deal-title"
+          htmlFor={`${formId}-title`}
           className="text-sm font-medium text-slate-700"
         >
           Deal title
         </label>
+
         <Input
-          id="deal-title"
+          id={`${formId}-title`}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Enter deal title"
@@ -85,13 +90,13 @@ export const DealForm = ({
 
       <div className="flex flex-col gap-1.5">
         <label
-          htmlFor="deal-client"
+          htmlFor={`${formId}-client`}
           className="text-sm font-medium text-slate-700"
         >
           Client
         </label>
         <Select
-          id="deal-client"
+          id={`${formId}-client`}
           value={clientId}
           onChange={(e) => setClientId(e.target.value)}
         >
@@ -106,13 +111,13 @@ export const DealForm = ({
 
       <div className="flex flex-col gap-1.5">
         <label
-          htmlFor="deal-value"
+          htmlFor={`${formId}-value`}
           className="text-sm font-medium text-slate-700"
         >
           Deal value
         </label>
         <Input
-          id="deal-value"
+          id={`${formId}-value`}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Enter deal value"
@@ -122,13 +127,13 @@ export const DealForm = ({
 
       <div className="flex flex-col gap-1.5">
         <label
-          htmlFor="deal-stage"
+          htmlFor={`${formId}-stage`}
           className="text-sm font-medium text-slate-700"
         >
           Stage
         </label>
         <Select
-          id="deal-stage"
+          id={`${formId}-stage`}
           value={stage}
           onChange={(e) => setStage(e.target.value as DealStage)}
         >
@@ -142,13 +147,13 @@ export const DealForm = ({
 
       <div className="flex flex-col gap-1.5">
         <label
-          htmlFor="deal-comment"
+          htmlFor={`${formId}-comment`}
           className="text-sm font-medium text-slate-700"
         >
           Comment
         </label>
         <textarea
-          id="deal-comment"
+          id={`${formId}-comment`}
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Add a short comment"
