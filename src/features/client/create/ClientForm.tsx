@@ -11,23 +11,25 @@ import type {
 } from '@/entities/client/model/types'
 
 type CreateClientFormProps = {
-  onSubmit: (data: CreateClientDto) => void
+  onSubmit: (data: CreateClientDto) => void | Promise<void>
   onCancel?: () => void
   initialData?: CreateClientDto
   isEdit?: false
+  embedded?: boolean
 }
 
 type EditClientFormProps = {
-  onSubmit: (data: UpdateClientDto) => void
+  onSubmit: (data: UpdateClientDto) => void | Promise<void>
   onCancel?: () => void
   initialData?: UpdateClientDto
   isEdit: true
+  embedded?: boolean
 }
 
 type Props = CreateClientFormProps | EditClientFormProps
 
 export const ClientForm = (props: Props) => {
-  const { onSubmit, initialData, isEdit, onCancel } = props
+  const { onSubmit, initialData, isEdit, onCancel, embedded } = props
   const [name, setName] = useState(initialData?.name || '')
   const [email, setEmail] = useState(initialData?.email || '')
   const [phone, setPhone] = useState(initialData?.phone || '')
@@ -37,7 +39,7 @@ export const ClientForm = (props: Props) => {
   )
   const [error, setError] = useState('')
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name.trim() || !email.includes('@')) {
       setError('Enter valid name and email')
       return
@@ -50,7 +52,7 @@ export const ClientForm = (props: Props) => {
       status,
     }
 
-    onSubmit(formData)
+    await onSubmit(formData)
 
     if (!isEdit) {
       setName('')
@@ -64,7 +66,7 @@ export const ClientForm = (props: Props) => {
   return (
     <div
       className={
-        isEdit
+        isEdit || embedded
           ? 'w-full space-y-4'
           : 'w-full max-w-md space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm'
       }
@@ -167,7 +169,15 @@ export const ClientForm = (props: Props) => {
           </Button>
         </div>
       ) : (
-        <Button onClick={handleSubmit}>Add client</Button>
+        <div className="flex flex-col gap-3">
+          <Button onClick={handleSubmit}>Add client</Button>
+
+          {onCancel && (
+            <Button variant="secondary" onClick={onCancel}>
+              Cancel
+            </Button>
+          )}
+        </div>
       )}
     </div>
   )
