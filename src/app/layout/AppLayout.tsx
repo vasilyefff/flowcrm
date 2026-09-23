@@ -66,13 +66,15 @@ export const AppLayout = () => {
       </aside>
 
       <main className="flex-1 p-8">
-        <button
-          type="button"
-          onClick={() => setIsSidebarOpen(true)}
-          className="mb-4 flex h-9 w-9 items-center justify-center rounded-lg text-2xl text-slate-700 hover:bg-slate-200 md:hidden"
-        >
-          ☰
-        </button>
+        <div className="sticky top-0 z-30 mb-4 bg-gray-100 py-2 md:hidden">
+          <button
+            type="button"
+            onClick={() => setIsSidebarOpen(true)}
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-2xl text-slate-700 hover:bg-slate-200"
+          >
+            ☰
+          </button>
+        </div>
 
         <Outlet />
       </main>

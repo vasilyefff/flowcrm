@@ -9,7 +9,7 @@ import { Input } from '@/shared/ui/Input'
 import { Select } from '@/shared/ui/Select'
 
 type Props = {
-  onSubmit: (data: CreateDealDto) => void
+  onSubmit: (data: CreateDealDto) => void | Promise<void>
   initialData?: CreateDealDto
   isEdit?: boolean
   onCancel?: () => void
@@ -33,7 +33,7 @@ export const DealForm = ({
   const [comment, setComment] = useState(initialData?.comment || '')
   const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (!title.trim() || !clientId || !value.trim()) {
@@ -49,14 +49,18 @@ export const DealForm = ({
       comment,
     }
 
-    onSubmit(data)
-    setError('')
+    try {
+      await onSubmit(data)
 
-    setClientId('')
-    setTitle('')
-    setValue('')
-    setStage('lead')
-    setComment('')
+      setError('')
+      setClientId('')
+      setTitle('')
+      setValue('')
+      setStage('lead')
+      setComment('')
+    } catch {
+      return
+    }
   }
 
   return (

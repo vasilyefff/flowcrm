@@ -38,6 +38,7 @@ export const DealsPage = () => {
   const [dealToDelete, setDealToDelete] = useState<Deal | null>(null)
   const [stageFilter, setStageFilter] = useState<DealStageFilter>('all')
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [showBackToTop, setShowBackToTop] = useState(false)
 
   const dispatch = useDispatch<AppDispatch>()
 
@@ -46,8 +47,22 @@ export const DealsPage = () => {
     dispatch(fetchClients())
   }, [dispatch])
 
-  const handleCreateDeal = (data: CreateDealDto) => {
-    dispatch(createDealRequest(data))
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  const handleCreateDeal = async (data: CreateDealDto) => {
+    await dispatch(createDealRequest(data)).unwrap()
+
+    setIsCreateModalOpen(false)
   }
 
   const handleEditDeal = (deal: Deal) => {
@@ -95,7 +110,7 @@ export const DealsPage = () => {
 
   return (
     <div>
-      <div className="mb-6">
+      <div className="sticky top-[52px] z-20 mb-6 bg-gray-100 pb-4 md:static md:bg-transparent md:pb-0">
         <h1 className="text-2xl font-semibold text-slate-900">Deals</h1>
 
         {fetchStatus === 'succeeded' && (
@@ -103,42 +118,60 @@ export const DealsPage = () => {
             Total deals: {deals.length}
           </p>
         )}
+
+        <div className="mt-4 flex max-w-xs flex-col gap-1.5">
+          <label
+            htmlFor="deal-stage-filter"
+            className="text-sm font-medium text-slate-700"
+          >
+            Filter by stage
+          </label>
+
+          <Select
+            id="deal-stage-filter"
+            value={stageFilter}
+            onChange={(event) =>
+              setStageFilter(event.target.value as DealStageFilter)
+            }
+          >
+            <option value="all">All</option>
+            <option value="lead">Lead</option>
+            <option value="negotiation">Negotiation</option>
+            <option value="proposal">Proposal</option>
+            <option value="won">Won</option>
+            <option value="lost">Lost</option>
+          </Select>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
         <div className="space-y-6">
-          <div className="lg:hidden">
-            <Button
-              type="button"
-              variant="primary"
-              onClick={() => setIsCreateModalOpen(true)}
-            >
-              Create deal
-            </Button>
-          </div>
+          <div className="fixed right-4 bottom-4 z-40 flex flex-col items-end gap-10 lg:hidden">
+            {showBackToTop && (
+              <button
+                type="button"
+                aria-label="Back to top"
+                onClick={() =>
+                  window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth',
+                  })
+                }
+                className="flex h-12 w-12 items-center justify-center rounded-lg bg-slate-700 text-lg text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800"
+              >
+                ↑
+              </button>
+            )}
 
-          <div className="flex max-w-xs flex-col gap-1.5">
-            <label
-              htmlFor="deal-stage-filter"
-              className="text-sm font-medium text-slate-700"
-            >
-              Filter by stage
-            </label>
-
-            <Select
-              id="deal-stage-filter"
-              value={stageFilter}
-              onChange={(event) =>
-                setStageFilter(event.target.value as DealStageFilter)
-              }
-            >
-              <option value="all">All</option>
-              <option value="lead">Lead</option>
-              <option value="negotiation">Negotiation</option>
-              <option value="proposal">Proposal</option>
-              <option value="won">Won</option>
-              <option value="lost">Lost</option>
-            </Select>
+            <div className="shadow-xl shadow-slate-900/20">
+              <Button
+                type="button"
+                variant="primary"
+                onClick={() => setIsCreateModalOpen(true)}
+              >
+                Create deal
+              </Button>
+            </div>
           </div>
 
           {fetchStatus === 'loading' && (

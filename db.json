@@ -181,6 +181,15 @@
       "comment": "Project postponed",
       "id": "10",
       "createdAt": "2026-09-15T14:00:00.000Z"
+    },
+    {
+      "title": "TestNewDeal",
+      "clientId": "4",
+      "value": 765000,
+      "stage": "lead",
+      "comment": "",
+      "id": "11",
+      "createdAt": "2026-09-23T17:29:35.135Z"
     }
   ]
 }
